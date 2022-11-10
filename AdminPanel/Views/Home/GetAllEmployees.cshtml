@@ -1,0 +1,23 @@
+﻿@model List<Employee>
+<h2>Все сотрудники</h2>
+<table class="table">
+    <tr>
+        <th>Name:</th>
+        <th>Company:</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Company?.Name</td>
+        </tr>
+    }
+</table>
+<h2>Add a new employee</h2>
+<form method="post" asp-action="Create" asp-controller="Home">
+    <label>Employee name:</label>
+    <input type="text" name="employeeName" /><br />
+    <label>Company name:</label>
+    <input type="text" name="companyName" /><br />
+    <input type="submit" value="Add" />
+</form>

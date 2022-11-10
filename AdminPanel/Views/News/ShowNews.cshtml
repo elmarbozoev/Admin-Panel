@@ -1,0 +1,12 @@
+﻿@model News
+
+<h1>@Model.Name</h1>
+
+<p>
+    @foreach (var picture in Model.Pictures)
+    {
+        <img width="80px" src="@picture.Path" alt="@picture.Name" />
+    }
+</p>
+
+<p>@Model.Description</p>

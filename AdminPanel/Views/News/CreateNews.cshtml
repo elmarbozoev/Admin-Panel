@@ -1,0 +1,10 @@
+﻿<h2>Create news</h2>
+<form method="post" asp-action="CreateNews" asp-controller="News" enctype="multipart/form-data">
+    <label for="news-name">News name:</label><br />
+    <input id="news-name" type="text" name="newsName" /><br />
+    <label for="news-description">News description:</label><br />
+    <input id="news-description" type="text" name="newsDescription" /><br />
+    <label for="news-pictures">News pictures</label><br />
+    <input type="file" multiple name="uploadedFiles" /><br />
+    <input type="submit" value="Create" />
+</form>
