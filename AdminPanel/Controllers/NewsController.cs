@@ -46,9 +46,9 @@ namespace AdminPanel.Controllers
         public IActionResult CreateNews() => View();
 
         [HttpPost]
-        public async Task<IActionResult> CreateNews(string newsName, string newsDescription, IFormFileCollection uploadedFiles)
+        public async Task<IActionResult> CreateNews(string newsName, string newsDescription, IFormFileCollection uploadedFiles, DateTime dateOfPublication)
         {
-            var news = new News() { Name = newsName, Description = newsDescription };
+            var news = new News() { Name = newsName, Description = newsDescription, DateOfPublication = dateOfPublication };
             await _context.News.AddAsync(news);
             await _context.SaveChangesAsync();
 
@@ -72,7 +72,7 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> EditPictures(int id)
         {
             var news = await _context.News.Include(x => x.Pictures).FirstOrDefaultAsync(x => x.Id == id);
-            return View(news?.Pictures?.ToList());
+            return View(news);
         }
 
         [HttpPost]
