@@ -1,4 +1,8 @@
-﻿@model List<Pictures>
+﻿@model News
+
+@{
+    var pictures = Model?.Pictures?.ToList();
+}
 
 <style>
     .pictures {
@@ -24,24 +28,24 @@
 </style>
 
 <div class="pictures">
-    @for(int i = 0; i < Model.Count; i++)
+    @for(int i = 0; i < pictures?.Count; i++)
     {
         <div class="picture">
-            @if (Model[i].News.MainPictureIndex == i)
+            @if (Model.MainPictureIndex == i)
             {
                 <span class="pic">The main picture of the news</span>
             }
-            <img height="80px" src="@Model[i].Path" alt="@Model[i].Name" />
-            <form method="post" asp-action="MakeMainPicture" asp-controller="News" asp-route-newsId="@Model[i].NewsId" asp-route-pictureIndex="@i">
+            <img height="80px" src="@pictures[i].Path" alt="@pictures[i].Name" />
+            <form method="post" asp-action="MakeMainPicture" asp-controller="News" asp-route-newsId="@Model.Id" asp-route-pictureIndex="@i">
                 <input  type="submit" value="Make the main" />
             </form>
-            <form method="post" asp-action="DeletePicture" asp-controller="News" asp-route-pictureId="@Model[i].Id">
+            <form method="post" asp-action="DeletePicture" asp-controller="News" asp-route-pictureId="@pictures[i].Id">
                 <input class="input"type="submit" value="Delete" />
             </form>
         </div>
     }
 </div>
-<form method="post" asp-action="AddPictures" asp-controller="News" asp-route-newsId="@Model.First().NewsId" enctype="multipart/form-data">
+<form method="post" asp-action="AddPictures" asp-controller="News" asp-route-newsId="@Model.Id" enctype="multipart/form-data">
     <label class="pic">Add pictures:</label><br />
     <input class="input" type="file" multiple name="uploadedFiles" /><br />
     <input class="input" type="submit" value="Add" />
