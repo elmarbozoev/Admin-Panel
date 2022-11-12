@@ -2,7 +2,7 @@
 
 namespace AdminPanel.Interfaces
 {
-    public interface IContent
+    public interface IContent 
     {
         int Id { get; set; }
         string Name { get; set; }

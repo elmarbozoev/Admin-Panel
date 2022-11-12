@@ -1,4 +1,5 @@
-﻿using AdminPanel.Models;
+﻿using AdminPanel.Interfaces;
+using AdminPanel.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -61,9 +62,10 @@ namespace AdminPanel.Controllers
                     {
                         await uploadedFile.CopyToAsync(fileStream);
                     }
-                    await _context.Pictures.AddAsync(new Pictures() { Name = uploadedFile.FileName, Path = path, News = news });
+                    await _context.Pictures.AddAsync(new Picture() { Name = uploadedFile.FileName, Path = path, News = news });
                     await _context.SaveChangesAsync();
-                }
+                } 
+
             }
             return RedirectToAction("Index");
         }
@@ -106,7 +108,7 @@ namespace AdminPanel.Controllers
                     {
                         await uploadedFile.CopyToAsync(fileStream);
                     }
-                    await _context.Pictures.AddAsync(new Pictures() { Name = uploadedFile.Name, Path = path, News = news });
+                    await _context.Pictures.AddAsync(new Picture() { Name = uploadedFile.Name, Path = path, News = news });
                     await _context.SaveChangesAsync();
                 }
             }
