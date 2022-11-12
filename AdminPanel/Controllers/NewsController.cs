@@ -92,7 +92,7 @@ namespace AdminPanel.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("EditPictures", new { id = picture.NewsId });
         }
-
+        //test
         [HttpPost]
         public async Task<IActionResult> AddPictures(int newsId, IFormFileCollection uploadedFiles)
         {
