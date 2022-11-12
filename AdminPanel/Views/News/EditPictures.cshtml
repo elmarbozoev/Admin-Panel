@@ -29,20 +29,36 @@
         <div class="picture">
             @if (Model[i].News.MainPictureIndex == i)
             {
-                <span>The main picture of the news</span>
+                <span class="pic">The main picture of the news</span>
             }
             <img height="80px" src="@Model[i].Path" alt="@Model[i].Name" />
             <form method="post" asp-action="MakeMainPicture" asp-controller="News" asp-route-newsId="@Model[i].NewsId" asp-route-pictureIndex="@i">
-                <input type="submit" value="Make the main" />
+                <input  type="submit" value="Make the main" />
             </form>
             <form method="post" asp-action="DeletePicture" asp-controller="News" asp-route-pictureId="@Model[i].Id">
-                <input type="submit" value="Delete" />
+                <input class="input"type="submit" value="Delete" />
             </form>
         </div>
     }
 </div>
 <form method="post" asp-action="AddPictures" asp-controller="News" asp-route-newsId="@Model.First().NewsId" enctype="multipart/form-data">
-    <label>Add pictures:</label><br />
-    <input type="file" multiple name="uploadedFiles" /><br />
-    <input type="submit" value="Add" />
+    <label class="pic">Add pictures:</label><br />
+    <input class="input" type="file" multiple name="uploadedFiles" /><br />
+    <input class="input" type="submit" value="Add" />
 </form>
+
+<form asp-action="Index" asp-controller="News" method="get">
+    <input type="submit" value="Back" />
+</form>
+
+
+<style>
+.input{
+    margin-bottom: 10px;
+}
+
+.pic{
+    padding-bottom: 5px;
+    padding-top:5px;
+}
+</style>
