@@ -17,9 +17,9 @@ namespace AdminPanel.Controllers
             _environment = environment;
         }
 
-        public async Task<IActionResult> ShowNews(int newsId) => View(await _context.News.Include(x => x.Pictures).FirstOrDefaultAsync(x => x.Id == newsId));
-
         public async Task<IActionResult> Index() => View(await _context.News.Include(x => x.Pictures).ToListAsync());
+
+        public async Task<IActionResult> ShowNews(int newsId) => View(await _context.News.Include(x => x.Pictures).FirstOrDefaultAsync(x => x.Id == newsId));
 
         [HttpGet]
         public async Task<IActionResult> EditNews(int id) => View(await _context.News.FindAsync(id));

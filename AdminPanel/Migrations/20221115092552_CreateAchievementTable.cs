@@ -6,11 +6,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AdminPanel.Migrations
 {
-    public partial class TableNews : Migration
+    public partial class CreateAchievementTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Achievements",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Achievements", x => x.Id);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -69,6 +86,21 @@ namespace AdminPanel.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Companies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Companies", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "News",
                 columns: table => new
                 {
@@ -77,7 +109,9 @@ namespace AdminPanel.Migrations
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MainPictureIndex = table.Column<int>(type: "int", nullable: false),
+                    DateOfPublication = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -213,6 +247,27 @@ namespace AdminPanel.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CompanyId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Pictures",
                 columns: table => new
                 {
@@ -220,11 +275,19 @@ namespace AdminPanel.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NewsId = table.Column<int>(type: "int", nullable: false)
+                    NewsId = table.Column<int>(type: "int", nullable: false),
+                    Path = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AchievementId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pictures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pictures_Achievements_AchievementId",
+                        column: x => x.AchievementId,
+                        principalTable: "Achievements",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Pictures_News_NewsId",
                         column: x => x.NewsId,
@@ -272,6 +335,16 @@ namespace AdminPanel.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_CompanyId",
+                table: "Employees",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pictures_AchievementId",
+                table: "Pictures",
+                column: "AchievementId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pictures_NewsId",
                 table: "Pictures",
                 column: "NewsId");
@@ -295,6 +368,9 @@ namespace AdminPanel.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
                 name: "Pictures");
 
             migrationBuilder.DropTable(
@@ -302,6 +378,12 @@ namespace AdminPanel.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "Achievements");
 
             migrationBuilder.DropTable(
                 name: "News");
