@@ -1,5 +1,5 @@
-﻿using AdminPanel.Models;
 using Microsoft.AspNetCore.Mvc;
+using AdminPanel.Models;
 
 namespace AdminPanel.Interfaces
 {
