@@ -9,7 +9,7 @@ namespace AdminPanel.Models
         public string? Description { get; set; }
         public ICollection<MediaFile>? MediaFiles { get; set; }
         public int MainMediaFileIndex { get; set; }
-        public string DateOfPublication { get; set; }
+        public string? DateOfPublication { get; set; }
 
         public News()
         {

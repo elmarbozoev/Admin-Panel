@@ -8,6 +8,7 @@ namespace AdminPanel.Models
         public string? Name { get; set; }
         public string? Description { get; set; }
         public ICollection<MediaFile>? MediaFiles { get; set; }
+        public string? DateOfPublication { get; set; }
 
         public Achievement()
         {

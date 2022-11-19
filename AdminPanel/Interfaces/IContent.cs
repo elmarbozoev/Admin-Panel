@@ -9,5 +9,6 @@ namespace AdminPanel.Interfaces
         string? Name { get; set; }
         string? Description { get; set; }    
         ICollection<MediaFile>? MediaFiles { get; set; }
+        string? DateOfPublication { get; set; }
     }
 }
