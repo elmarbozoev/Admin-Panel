@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -24,5 +24,15 @@
   <ItemGroup>
     <Folder Include="wwwroot\Media\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\News\CreateNews.cshtml" />
+    <None Include="Views\News\EditNews.cshtml" />
+    <None Include="Views\News\EditPictures.cshtml" />
+    <None Include="Views\News\Index.cshtml" />
+    <None Include="Views\News\ShowNews.cshtml" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

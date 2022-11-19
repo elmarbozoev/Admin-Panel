@@ -14,22 +14,13 @@
     <textarea class="input" id="news-description" type="text" name="description"></textarea><br />
 
     <label class="pic"  for="news-pictures">News pictures</label><br />
-
     <input class="input" type="file" multiple name="uploadedFiles" value="Choose pictures" /><br />
 
     <input class="input" type="submit" value="Create" />
 </form>
 
+
 <form asp-action="Index" asp-controller="News" method="get">
     <input type="submit" value="Back" />
 </form>
 
-<style>
-.input{
-    margin-bottom: 10px;
-}
-
-.pic{
-    padding-bottom: 5px;
-}
-</style>

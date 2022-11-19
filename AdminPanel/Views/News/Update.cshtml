@@ -1,5 +1,6 @@
 ﻿@model News
 
+
 <h2>Edit the news</h2>
 <form method="post" asp-controller="News" asp-action="Update" asp-route-contentId="@Model.Id">
     <label for="news-name">News name: </label><br />
@@ -14,13 +15,3 @@
 <form asp-action="Index" asp-controller="News" method="get">
     <input type="submit" value="Back" />
 </form>
-
-<style>
-.input{
-    margin-bottom: 10px;
-}
-
-.pic{
-    padding-bottom: 5px;
-}
-</style>
