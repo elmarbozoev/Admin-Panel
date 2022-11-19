@@ -8,10 +8,12 @@ namespace AdminPanel.Controllers
     public class AchievementController : Controller, ICRUDController
     {
         ApplicationContext _context;
+        IWebHostEnvironment _environment;
 
-        public AchievementController(ApplicationContext context)
+        public AchievementController(ApplicationContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         public IActionResult Create()
@@ -19,12 +21,12 @@ namespace AdminPanel.Controllers
             throw new NotImplementedException();
         }
 
-        public Task<IActionResult> Delete(int contentId)
+        public Task<IActionResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IActionResult> Details(int contentId)
+        public Task<IActionResult> Details(int id)
         {
             throw new NotImplementedException();
         }
@@ -34,7 +36,7 @@ namespace AdminPanel.Controllers
             throw new NotImplementedException();
         }
 
-        public Task<IActionResult> Update(int contentId)
+        public Task<IActionResult> Update(int id)
         {
             throw new NotImplementedException();
         }

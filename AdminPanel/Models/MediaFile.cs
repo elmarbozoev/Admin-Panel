@@ -1,4 +1,6 @@
-﻿namespace AdminPanel.Models
+﻿using Microsoft.AspNetCore.Mvc.Formatters;
+
+namespace AdminPanel.Models
 {
     public class MediaFile
     {
