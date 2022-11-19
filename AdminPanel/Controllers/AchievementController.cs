@@ -1,10 +1,11 @@
-﻿using AdminPanel.Models;
+﻿using AdminPanel.Interfaces;
+using AdminPanel.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdminPanel.Controllers
 {
-    public class AchievementController : Controller
+    public class AchievementController : Controller, ICRUDController
     {
         ApplicationContext _context;
 
@@ -13,8 +14,34 @@ namespace AdminPanel.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index() => View(await _context.Achievements.Include(x => x.Pictures).ToListAsync());
+        public IActionResult Create()
+        {
+            throw new NotImplementedException();
+        }
 
-        public async Task<IActionResult> ShowAchievement(int achievementId) => View(await _context.Achievements.FindAsync(achievementId));
+        public Task<IActionResult> Delete(int contentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IActionResult> Details(int contentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IActionResult> Index()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IActionResult> Update(int contentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IActionResult> UpdateMedia(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

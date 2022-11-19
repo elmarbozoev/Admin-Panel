@@ -7,11 +7,11 @@ namespace AdminPanel.Models
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public ICollection<Picture>? Pictures { get; set; }
+        public ICollection<MediaFile>? MediaFiles { get; set; }
 
         public Achievement()
         {
-            Pictures = new List<Picture>();
+            MediaFiles = new List<MediaFile>();
         }
     }
 }

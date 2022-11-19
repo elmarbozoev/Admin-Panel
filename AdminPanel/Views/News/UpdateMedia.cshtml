@@ -1,17 +1,17 @@
 ﻿@model News
 
 @{
-    var pictures = Model?.Pictures?.ToList();
+    var mediaFiles = Model?.MediaFiles?.ToList();
 }
 
 <style>
-    .pictures {
+    .media-files {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
     }
 
-    .picture {
+    .media-file {
         border: 1px solid;
         display: flex;
         flex-direction: column;
@@ -19,7 +19,7 @@
         align-content: center;
     }
 
-    .picture form {
+    .media-file form {
         margin-top: 5px;
         display: flex;
         justify-content: center;
@@ -27,25 +27,25 @@
     }
 </style>
 
-<div class="pictures">
-    @for(int i = 0; i < pictures?.Count; i++)
+<div class="media-files">
+    @for(int i = 0; i < mediaFiles?.Count; i++)
     {
-        <div class="picture">
-            @if (Model.MainPictureIndex == i)
+        <div class="media-file">
+            @if (Model.MainMediaFileIndex == i)
             {
                 <span class="pic">The main picture of the news</span>
             }
-            <img height="80px" src="@pictures[i].Path" alt="@pictures[i].Name" />
-            <form method="post" asp-action="MakeMainPicture" asp-controller="News" asp-route-newsId="@Model.Id" asp-route-pictureIndex="@i">
+            <img height="80px" src="@mediaFiles[i].Path" alt="@mediaFiles[i].Name" />
+            <form method="post" asp-action="MakeMainMediaFile" asp-controller="News" asp-route-id="@Model.Id" asp-route-mediaFileIndex="@i">
                 <input  type="submit" value="Make the main" />
             </form>
-            <form method="post" asp-action="DeletePicture" asp-controller="News" asp-route-pictureId="@pictures[i].Id">
+            <form method="post" asp-action="DeleteMediaFile" asp-controller="News" asp-route-id="@Model.Id" asp-route-mediaId="@mediaFiles[i].Id">
                 <input class="input"type="submit" value="Delete" />
             </form>
         </div>
     }
 </div>
-<form method="post" asp-action="AddPictures" asp-controller="News" asp-route-newsId="@Model.Id" enctype="multipart/form-data">
+<form method="post" asp-action="AddMediaFiles" asp-controller="News" asp-route-id="@Model.Id" enctype="multipart/form-data">
     <label class="pic">Add pictures:</label><br />
     <input class="input" type="file" multiple name="uploadedFiles" /><br />
     <input class="input" type="submit" value="Add" />

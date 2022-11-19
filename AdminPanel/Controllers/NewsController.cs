@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdminPanel.Controllers
 {
-    public class NewsController : Controller
+    public class NewsController : Controller, ICRUDController
     {
         ApplicationContext _context;
         IWebHostEnvironment _environment;
@@ -17,102 +17,102 @@ namespace AdminPanel.Controllers
             _environment = environment;
         }
 
-        public async Task<IActionResult> Index() => View(await _context.News.Include(x => x.Pictures).ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.News.Include(x => x.MediaFiles).ToListAsync());
 
-        public async Task<IActionResult> ShowNews(int newsId) => View(await _context.News.Include(x => x.Pictures).FirstOrDefaultAsync(x => x.Id == newsId));
+        public async Task<IActionResult> Details(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
-        [HttpGet]
-        public async Task<IActionResult> EditNews(int id) => View(await _context.News.FindAsync(id));
-
-        [HttpPost]
-        public async Task<IActionResult> EditNews(int newsId, string newsName, string newsDescription)
+        public async Task<IActionResult> Update(int id)
         {
-            var news = await _context.News.FindAsync(newsId);
-            news.Name = newsName;
-            news.Description = newsDescription;
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteNews(int newsId)
-        {
-            var news = await _context.News.FindAsync(newsId);
-            _context.News.Remove(news);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public IActionResult CreateNews() => View();
-
-        [HttpPost]
-        public async Task<IActionResult> CreateNews(string newsName, string newsDescription, IFormFileCollection uploadedFiles, DateTime dateOfPublication)
-        {
-            var news = new News() { Name = newsName, Description = newsDescription, DateOfPublication = dateOfPublication };
-            await _context.News.AddAsync(news);
-            await _context.SaveChangesAsync();
-
-            if (uploadedFiles != null)
-            {
-                foreach (var uploadedFile in uploadedFiles)
-                {
-                    var path = "/Pictures/" + uploadedFile.FileName;
-                    using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
-                    {
-                        await uploadedFile.CopyToAsync(fileStream);
-                    }
-                    await _context.Pictures.AddAsync(new Picture() { Name = uploadedFile.FileName, Path = path, News = news });
-                    await _context.SaveChangesAsync();
-                } 
-
-            }
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> EditPictures(int id)
-        {
-            var news = await _context.News.Include(x => x.Pictures).FirstOrDefaultAsync(x => x.Id == id);
+            var news = await _context.News.FindAsync(id);
             return View(news);
         }
 
         [HttpPost]
-        public async Task<IActionResult> MakeMainPicture(int newsId, int pictureIndex)
+        public async Task<IActionResult> Update(int id, string name, string description)
         {
-            var news = await _context.News.FindAsync(newsId);
-            news.MainPictureIndex = pictureIndex;
+            var news = await _context.News.FindAsync(id);
+            news.Name = name;
+            news.Description = description;
             await _context.SaveChangesAsync();
-            return RedirectToAction("EditPictures", new { id = newsId });
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeletePicture(int pictureId)
+        public async Task<IActionResult> Delete(int id)
         {
-            var picture = await _context.Pictures.FindAsync(pictureId);
-            _context.Pictures.Remove(picture);
+            var news = await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id);
+            _context.News.Remove(news);
             await _context.SaveChangesAsync();
-            return RedirectToAction("EditPictures", new { id = picture.NewsId });
+
+            return RedirectToAction("Index");
         }
-        //test
+
+        public IActionResult Create() => View();
+
         [HttpPost]
-        public async Task<IActionResult> AddPictures(int newsId, IFormFileCollection uploadedFiles)
+        public async Task<IActionResult> Create(int id, string name, string description, FormFileCollection uploadedFiles, string dateOfPublication)
         {
-            var news = await _context.News.FindAsync(newsId);
-            if(uploadedFiles != null)
+            var news = new News() { Name = name, Description = description, DateOfPublication = dateOfPublication };
+            await _context.News.AddAsync(news);
+            await _context.SaveChangesAsync();
+            if (uploadedFiles != null)
             {
                 foreach(var uploadedFile in uploadedFiles)
                 {
-                    var path = "/Pictures/" + uploadedFile.FileName;
+                    var path = "/Media/" + uploadedFile.FileName;
                     using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
                     {
                         await uploadedFile.CopyToAsync(fileStream);
                     }
-                    await _context.Pictures.AddAsync(new Picture() { Name = uploadedFile.Name, Path = path, News = news });
+                    var mediaFile = new MediaFile() { Name = uploadedFile.FileName, Path = path };
+                    await _context.MediaFiles.AddAsync(mediaFile);
+                    news.MediaFiles.Add(mediaFile);
                     await _context.SaveChangesAsync();
                 }
             }
-            return RedirectToAction("EditPictures", new { id = newsId });
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> UpdateMedia(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
+
+        [HttpPost]
+        public async Task<IActionResult> MakeMainMediaFile(int id, int mediaFileIndex)
+        {
+            var news = await _context.News.FindAsync(id);
+            news.MainMediaFileIndex = mediaFileIndex;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("UpdateMedia", new {id = id});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteMediaFile(int id, int mediaId)
+        {
+            var mediaFile = await _context.MediaFiles.FindAsync(mediaId);
+            _context.MediaFiles.Remove(mediaFile);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("UpdateMedia", new {id = id});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMediaFiles(int id, FormFileCollection uploadedFiles)
+        {
+            var news = await _context.News.FindAsync(id);
+            if (uploadedFiles!=null)
+            {
+                foreach(var uploadedFile in uploadedFiles)
+                {
+                    var path = "/Media/" + uploadedFile.FileName;
+                    using(var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+                    {
+                        await uploadedFile.CopyToAsync(fileStream);
+                    }
+                    var mediaFile = new MediaFile() { Name = uploadedFile.FileName, Path = path };
+                    await _context.MediaFiles.AddAsync(mediaFile);
+                    news.MediaFiles.Add(mediaFile);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return RedirectToAction("UpdateMedia", new { id = id });
         }
     }
 }
