@@ -1,6 +1,7 @@
 ﻿using AdminPanel.Interfaces;
 using AdminPanel.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -21,11 +22,7 @@ namespace AdminPanel.Controllers
 
         public async Task<IActionResult> Details(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
-        public async Task<IActionResult> Update(int id)
-        {
-            var news = await _context.News.FindAsync(id);
-            return View(news);
-        }
+        public async Task<IActionResult> Update(int id) => View(await _context.Achievements.FindAsync(id));
 
         [HttpPost]
         public async Task<IActionResult> Update(int id, string name, string description)
@@ -50,7 +47,7 @@ namespace AdminPanel.Controllers
         public IActionResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(int id, string name, string description, FormFileCollection uploadedFiles, string dateOfPublication)
+        public async Task<IActionResult> Create(string name, string description, FormFileCollection uploadedFiles, string dateOfPublication)
         {
             var news = new News() { Name = name, Description = description, DateOfPublication = dateOfPublication };
             await _context.News.AddAsync(news);

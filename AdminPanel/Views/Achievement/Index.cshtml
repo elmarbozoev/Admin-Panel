@@ -1,3 +1,4 @@
+@model List<Achievement>
 
 <style>
     table {
@@ -32,35 +33,42 @@
         <th colspan="2" style="text-align:center;">Actions</th>
         <th>Date of publication</th>
     </tr>
-  
+    @foreach(var achievement in Model)
+    {
         <tr>
-            <td ></td> @*name*@
-            <td></td> @*description*@
-            <td>        
-                    <img height="50px">   
-                    <video>
-                        <source src="" type="audio/mp4" poster=""/>   @*video and picture*@
+            <td>@achievement.Name</td>
+            <td>@achievement.Description</td>
+            <td>
+                @if(achievement.MediaFiles.First().Name.EndsWith(".mp4"))
+                {
+                    <img height="80px" src="@achievement.MediaFiles.First().Path" alt="@achievement.MediaFiles.First().Name">
+                }
+                else
+                {
+                    <video height="80px" controls>
+                        <source src="@achievement.MediaFiles.First().Path" type="video/mp4">
+                        @achievement.MediaFiles.First().Name
                     </video>
-                 <form>
-                     <input class="input" type="submit" value="Show all pictures and videos" />
-                 </form>
-            </td>
-            <td>
-                <form>
-                    <input type="submit" value="Edit" /> @*edit*@
+                }
+                <form method="get" asp-action="UpdateMedia" asp-controller="Achievement" asp-route-id="@achievement.Id">
+                    <input class="input" type="submit" value="Update media files" />
                 </form>
             </td>
             <td>
-                <form>
-                    <input type="submit" value="Delete" /> @*delete*@
+                <form method="get" asp-action="Update" asp-controller="Achievement" asp-route-id="@achievement.Id">
+                    <input type="submit" value="Edit" />
                 </form>
             </td>
-            <td></td> @*date*@
+            <td>
+                <form method="post" asp-action="Delete" asp-controller="Achievement" asp-route-id="@achievement.Id">
+                    <input type="submit" value="Delete" />
+                </form>
+            </td>
+            <td>@achievement.DateOfPublication</td>
         </tr>
-
     }
 </table>
 
-<form>
-    <input type="submit" value="Create achieve" /> @*creating*@
+<form method="get" asp-action="Create" asp-controller="Achievement">
+    <input type="submit" value="Create achievement" />
 </form>
