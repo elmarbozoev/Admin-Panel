@@ -38,17 +38,20 @@
             <td><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id">@news.Name</a></td>
             <td>@news.Description</td>
             <td>
-                @if (news.MediaFiles.Count != 0){
-                    @if (news.MediaFiles.ToList()[news.MainMediaFileIndex].Path.EndsWith(".mp4"))
+                @if (news.MediaFiles?.Count != 0){
+                    @{
+                        var mainMediaFile = news?.MediaFiles?.ToList()[news.MainMediaFileIndex];
+                    }
+                    @if (mainMediaFile.Path.EndsWith(".mp4"))
                     {
                         <video height="80px" controls>
-                            <source src="@news?.MediaFiles?.ToList()[news.MainMediaFileIndex].Path" type="video/mp4">
-                            @news?.MediaFiles?.ToList()[news.MainMediaFileIndex].Name
+                            <source src="@mainMediaFile.Path" type="video/mp4">
+                            @mainMediaFile.Name
                         </video>
                     }
                     else 
                     {
-                        <img height="80px" src="@news?.MediaFiles?.ToList()[news.MainMediaFileIndex].Path" alt="@news?.MediaFiles?.ToList()[news.MainMediaFileIndex].Name">
+                        <img height="80px" src="@mainMediaFile.Path" alt="@mainMediaFile.Name">
                     }
                 }
                  <form method="get" asp-action="UpdateMedia" asp-controller="News" asp-route-id="@news.Id">

@@ -20,11 +20,7 @@ namespace AdminPanel.Controllers
 
         public async Task<IActionResult> Details(int id) => View(await _context.Achievements.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
-        public async Task<IActionResult> Update(int id)
-        {
-            var achievement = await _context.News.FindAsync(id);
-            return View(achievement);
-        }
+        public async Task<IActionResult> Update(int id) => View(await _context.Achievements.FindAsync(id));
 
         [HttpPost]
         public async Task<IActionResult> Update(int id, string name, string description)
@@ -49,7 +45,7 @@ namespace AdminPanel.Controllers
         public IActionResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(int id, string name, string description, FormFileCollection uploadedFiles, string dateOfPublication)
+        public async Task<IActionResult> Create(string name, string description, FormFileCollection uploadedFiles, string dateOfPublication)
         {
             var achievement = new Achievement() { Name = name, Description = description, DateOfPublication = dateOfPublication };
             await _context.Achievements.AddAsync(achievement);
