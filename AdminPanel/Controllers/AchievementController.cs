@@ -8,40 +8,97 @@ namespace AdminPanel.Controllers
     public class AchievementController : Controller, ICRUDController
     {
         ApplicationContext _context;
+        IWebHostEnvironment _environment;
 
-        public AchievementController(ApplicationContext context)
+        public AchievementController(ApplicationContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Index() => View(await _context.Achievements.Include(x => x.MediaFiles).ToListAsync());
+
+        public async Task<IActionResult> Details(int id) => View(await _context.Achievements.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
+
+        public async Task<IActionResult> Update(int id) => View(await _context.Achievements.FindAsync(id));
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, string name, string description)
         {
-            throw new NotImplementedException();
+            var achievement = await _context.News.FindAsync(id);
+            achievement.Name = name;
+            achievement.Description = description;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
-        public Task<IActionResult> Delete(int contentId)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var achievement = await _context.Achievements.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id);
+            _context.Achievements.Remove(achievement);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
 
-        public Task<IActionResult> Details(int contentId)
+        public IActionResult Create() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string name, string description, FormFileCollection uploadedFiles, string dateOfPublication)
         {
-            throw new NotImplementedException();
+            var achievement = new Achievement() { Name = name, Description = description, DateOfPublication = dateOfPublication };
+            await _context.Achievements.AddAsync(achievement);
+            await _context.SaveChangesAsync();
+            if (uploadedFiles != null)
+            {
+                foreach (var uploadedFile in uploadedFiles)
+                {
+                    var path = "/Media/" + uploadedFile.FileName;
+                    using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+                    {
+                        await uploadedFile.CopyToAsync(fileStream);
+                    }
+                    var mediaFile = new MediaFile() { Name = uploadedFile.FileName, Path = path };
+                    await _context.MediaFiles.AddAsync(mediaFile);
+                    achievement.MediaFiles.Add(mediaFile);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return RedirectToAction("Index");
         }
 
-        public Task<IActionResult> Index()
+        public async Task<IActionResult> UpdateMedia(int id) => View(await _context.Achievements.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteMediaFile(int id, int mediaId)
         {
-            throw new NotImplementedException();
+            var mediaFile = await _context.MediaFiles.FindAsync(mediaId);
+            _context.MediaFiles.Remove(mediaFile);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("UpdateMedia", new { id = id });
         }
 
-        public Task<IActionResult> Update(int contentId)
+        [HttpPost]
+        public async Task<IActionResult> AddMediaFiles(int id, FormFileCollection uploadedFiles)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IActionResult> UpdateMedia(int id)
-        {
-            throw new NotImplementedException();
+            var achievement = await _context.Achievements.FindAsync(id);
+            if (uploadedFiles != null)
+            {
+                foreach (var uploadedFile in uploadedFiles)
+                {
+                    var path = "/Media/" + uploadedFile.FileName;
+                    using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+                    {
+                        await uploadedFile.CopyToAsync(fileStream);
+                    }
+                    var mediaFile = new MediaFile() { Name = uploadedFile.FileName, Path = path };
+                    await _context.MediaFiles.AddAsync(mediaFile);
+                    achievement.MediaFiles.Add(mediaFile);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return RedirectToAction("UpdateMedia", new { id = id });
         }
     }
 }

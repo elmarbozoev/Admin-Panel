@@ -33,9 +33,19 @@
         <div class="media-file">
             @if (Model.MainMediaFileIndex == i)
             {
-                <span class="pic">The main picture of the news</span>
+                <span class="pic">The main media of the news</span>
             }
-            <img height="80px" src="@mediaFiles[i].Path" alt="@mediaFiles[i].Name" />
+            @if (mediaFiles[i].Path.EndsWith(".mp4"))
+            {
+                <video height="100px" controls>
+                    <source src="@mediaFiles[i].Path" type="video/mp4">
+                    @mediaFiles[i].Name
+                </video>
+            }
+            else
+            {
+                <img height="100px" src="@mediaFiles[i].Path" alt="@mediaFiles[i].Name" />
+            }
             <form method="post" asp-action="MakeMainMediaFile" asp-controller="News" asp-route-id="@Model.Id" asp-route-mediaFileIndex="@i">
                 <input  type="submit" value="Make the main" />
             </form>

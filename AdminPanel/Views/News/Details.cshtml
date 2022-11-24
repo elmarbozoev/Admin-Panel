@@ -5,7 +5,17 @@
 <p>
     @foreach (var mediaFile in Model.MediaFiles)
     {
-        <img width="80px" src="@mediaFile.Path" alt="@mediaFile.Name" />
+        @if(mediaFile.Path.EndsWith(".mp4"))
+        {
+            <video height="100px" controls>
+                <source src="@mediaFile.Path" type="video/mp4">
+                @mediaFile.Name
+            </video>
+        }
+        else
+        {
+            <img height="100px" src="@mediaFile.Path" alt="@mediaFile.Name">
+        }
     }
 </p>
 
