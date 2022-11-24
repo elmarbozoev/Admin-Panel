@@ -1,0 +1,27 @@
+﻿@model Achievement
+
+<h2>Edit the achievement</h2>
+<form method="post" asp-action="Update" asp-controller="Achievement" asp-route-id="@Model.Id">
+    <label>Achievement name: </label><br />
+    <input class="input" name="name" type="text"/><br />
+
+    <label >Achievement description: </label><br />
+      <textarea class="input" name="description" type="text"></textarea><br />
+
+    <input class="input" type="submit" value="Save changes" />
+</form>
+
+<form method="get" asp-action="Index" asp-controller="Achievement">
+    <input type="submit" value="Back" />
+</form>
+
+
+<style>
+.input{
+    margin-bottom: 10px;
+}
+
+.pic{
+    padding-bottom: 5px;
+}
+</style>

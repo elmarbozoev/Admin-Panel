@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221027091056_TableNews")]
-    partial class TableNews
+    [Migration("20221119090139_updmediatable")]
+    partial class updmediatable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace AdminPanel.Migrations
                 .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("AdminPanel.Models.News", b =>
+            modelBuilder.Entity("AdminPanel.Models.Achievement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,10 +35,10 @@ namespace AdminPanel.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("News");
+                    b.ToTable("Achievements");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.Pictures", b =>
+            modelBuilder.Entity("AdminPanel.Models.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,14 +47,78 @@ namespace AdminPanel.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("NewsId")
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.MediaFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AchievementId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("NewsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AchievementId");
+
                     b.HasIndex("NewsId");
 
-                    b.ToTable("Pictures");
+                    b.ToTable("MediaFiles");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateOfPublication")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("MainMediaFileIndex")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.User", b =>
@@ -252,15 +316,24 @@ namespace AdminPanel.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.Pictures", b =>
+            modelBuilder.Entity("AdminPanel.Models.Employee", b =>
                 {
-                    b.HasOne("AdminPanel.Models.News", "News")
-                        .WithMany("Pictures")
-                        .HasForeignKey("NewsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("AdminPanel.Models.Company", "Company")
+                        .WithMany("Employees")
+                        .HasForeignKey("CompanyId");
 
-                    b.Navigation("News");
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.MediaFile", b =>
+                {
+                    b.HasOne("AdminPanel.Models.Achievement", null)
+                        .WithMany("MediaFiles")
+                        .HasForeignKey("AchievementId");
+
+                    b.HasOne("AdminPanel.Models.News", null)
+                        .WithMany("MediaFiles")
+                        .HasForeignKey("NewsId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -314,9 +387,19 @@ namespace AdminPanel.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AdminPanel.Models.Achievement", b =>
+                {
+                    b.Navigation("MediaFiles");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Company", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
             modelBuilder.Entity("AdminPanel.Models.News", b =>
                 {
-                    b.Navigation("Pictures");
+                    b.Navigation("MediaFiles");
                 });
 #pragma warning restore 612, 618
         }

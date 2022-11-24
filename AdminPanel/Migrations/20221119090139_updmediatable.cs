@@ -4,7 +4,7 @@
 
 namespace AdminPanel.Migrations
 {
-    public partial class CreatedTablePictures : Migration
+    public partial class updmediatable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

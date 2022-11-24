@@ -4,37 +4,44 @@
 
 namespace AdminPanel.Migrations
 {
-    public partial class UpdDB1 : Migration
+    public partial class UpdateAchievementsTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Surname",
-                table: "Employees");
-
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Employees",
+                name: "DateOfPublication",
+                table: "News",
                 type: "longtext",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "longtext")
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.AddColumn<string>(
+                name: "DateOfPublication",
+                table: "Achievements",
+                type: "longtext",
+                nullable: true)
+                .Annotation("MySql:CharSet", "utf8mb4");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "DateOfPublication",
+                table: "Achievements");
+
             migrationBuilder.UpdateData(
-                table: "Employees",
-                keyColumn: "Name",
+                table: "News",
+                keyColumn: "DateOfPublication",
                 keyValue: null,
-                column: "Name",
+                column: "DateOfPublication",
                 value: "");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Employees",
+                name: "DateOfPublication",
+                table: "News",
                 type: "longtext",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -42,13 +49,6 @@ namespace AdminPanel.Migrations
                 oldNullable: true)
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Surname",
-                table: "Employees",
-                type: "longtext",
-                nullable: false)
-                .Annotation("MySql:CharSet", "utf8mb4");
         }
     }
 }

@@ -1,0 +1,29 @@
+﻿@model DateTime
+
+<h2>Create achievement</h2>
+<form method="post" asp-action="Create" asp-controller="Achievement" asp-route-dateOfPublication="@DateTime.Now.ToString()">
+    <label>Achievement name:</label><br />
+    <input class="input" name="name" type="text"/><br />
+
+    <label>Achievement description:</label><br />
+    <textarea class="input" name="description"  type="text"></textarea><br />
+
+    <label class="pic">Achievemnt pictures:</label><br />
+    <input class="input" type="file" multiple name="uploadedFiles" value="Choose pictures" /><br />
+
+    <input class="input" type="submit" value="Create" />
+</form>
+
+<form asp-action="Index" asp-controller="Achievement">
+    <input type="submit" value="Back" />
+</form>
+
+<style>
+.input{
+    margin-bottom: 10px;
+}
+
+.pic{
+    padding-bottom: 5px;
+}
+</style>

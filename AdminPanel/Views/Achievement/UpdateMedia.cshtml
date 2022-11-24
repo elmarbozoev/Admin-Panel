@@ -1,0 +1,67 @@
+﻿@model Achievement
+
+@{
+    var mediaFiles = Model.MediaFiles.ToList();
+}
+
+<style>
+    .media__files {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .media__file {
+        border: 1px solid;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .media__file form {
+        margin-top: 5px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+    }
+</style>
+
+<div class="media__files">
+        @foreach(var mediaFile in mediaFiles)
+        {
+        <div class="media__file">
+            @if(mediaFile.Name.EndsWith("mp4"))
+            {
+                <video height="100px" controls>
+                    <source src="@mediaFile.Path" type="video/mp4">
+                    @mediaFile.Name
+                </video>
+            }
+            else
+            {
+                <img height="100px" src="@mediaFile.Path" alt="@mediaFile.Name" />
+            }
+            <form method="post" asp-action="DeleteMediaFile" asp-controller="Achievement" asp-route-id="@Model.Id" asp-route-mediaId="@mediaFile.Id">
+                <input class="input" type="submit" value="Delete" />
+            </form>
+        </div>
+        }
+</div>
+
+<form method="post" asp-action="AddMediaFiles" asp-controller="Achievement" asp-route-id="@Model.Id" enctype="multipart/form-data">
+    <label class="pic">Add media files:</label><br />
+    <input class="input" type="file" multiple name="uploadedFiles" /><br />
+    <input class="input" type="submit" value="Add" />
+</form>
+
+<form method="get" asp-action="Index" asp-controller="Achievement">
+    <input type="submit" value="Back" />
+</form>
+
+
+<style>
+.input{
+    margin-bottom: 10px;
+}
+</style>
