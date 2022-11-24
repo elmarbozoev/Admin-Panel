@@ -39,16 +39,19 @@
             <td>@achievement.Name</td>
             <td>@achievement.Description</td>
             <td>
-                @if(achievement.MediaFiles.First().Name.EndsWith(".mp4"))
+                @if(achievement.MediaFiles.Count != 0)
                 {
-                    <img height="80px" src="@achievement.MediaFiles.First().Path" alt="@achievement.MediaFiles.First().Name">
-                }
-                else
-                {
-                    <video height="80px" controls>
-                        <source src="@achievement.MediaFiles.First().Path" type="video/mp4">
-                        @achievement.MediaFiles.First().Name
-                    </video>
+                    @if (achievement.MediaFiles.First().Name.EndsWith(".mp4"))
+                    {
+                        <video height="80px" controls>
+                            <source src="@achievement.MediaFiles.First().Path" type="video/mp4">
+                            @achievement.MediaFiles.First().Name
+                        </video>
+                    }
+                    else
+                    {
+                        <img height="80px" src="@achievement.MediaFiles.First().Path" alt="@achievement.MediaFiles.First().Name">
+                    }
                 }
                 <form method="get" asp-action="UpdateMedia" asp-controller="Achievement" asp-route-id="@achievement.Id">
                     <input class="input" type="submit" value="Update media files" />
