@@ -4,28 +4,7 @@
     var mediaFiles = Model.MediaFiles.ToList();
 }
 
-<style>
-    .media__files {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .media__file {
-        border: 1px solid;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-    }
-
-    .media__file form {
-        margin-top: 5px;
-        display: flex;
-        justify-content: center;
-        align-content: center;
-    }
-</style>
+<link href="@Url.Content("~/css/Achievement/UpdateMedia.css")" rel="stylesheet" />
 
 <div class="media__files">
         @foreach(var mediaFile in mediaFiles)
@@ -58,10 +37,3 @@
 <form method="get" asp-action="Index" asp-controller="Achievement">
     <input type="submit" value="Back" />
 </form>
-
-
-<style>
-.input{
-    margin-bottom: 10px;
-}
-</style>
