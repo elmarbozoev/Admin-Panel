@@ -1,6 +1,24 @@
-﻿namespace AdminPanel.wwwroot.css.News
-{
-    public class EditMedia
-    {
-    }
+﻿.media__files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.media__file {
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.media__file form {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.input {
+    margin-bottom: 10px;
 }

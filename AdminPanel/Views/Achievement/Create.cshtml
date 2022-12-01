@@ -1,5 +1,7 @@
 ﻿@model DateTime
 
+<link href="@Url.Content("~/wwwroot/css/Achievement/Create.css")" />
+
 <h2>Create achievement</h2>
 <form method="post" asp-action="Create" asp-controller="Achievement" asp-route-dateOfPublication="@DateTime.Now.ToString()">
     <label>Achievement name:</label><br />
@@ -17,13 +19,3 @@
 <form asp-action="Index" asp-controller="Achievement">
     <input type="submit" value="Back" />
 </form>
-
-<style>
-.input{
-    margin-bottom: 10px;
-}
-
-.pic{
-    padding-bottom: 5px;
-}
-</style>
