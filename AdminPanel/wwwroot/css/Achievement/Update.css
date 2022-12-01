@@ -1,6 +1,7 @@
-﻿namespace AdminPanel.wwwroot.css.News
-{
-    public class EditAchieve
-    {
-    }
+﻿.input {
+    margin-bottom: 10px;
+}
+
+.pic {
+    padding-bottom: 5px;
 }
