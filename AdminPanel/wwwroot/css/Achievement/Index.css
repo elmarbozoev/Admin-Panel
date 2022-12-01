@@ -1,6 +1,21 @@
-﻿namespace AdminPanel.wwwroot.css.News
-{
-    public class Index_achieve
-    {
-    }
+﻿table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    width: 25%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.input {
+    margin-top: 5px;
 }

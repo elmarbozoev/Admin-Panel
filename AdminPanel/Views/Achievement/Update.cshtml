@@ -1,5 +1,7 @@
 ﻿@model Achievement
 
+<link href="@Url.Content("~/wwwroot/css/Achievement/Update.css")" />
+
 <h2>Edit the achievement</h2>
 <form method="post" asp-action="Update" asp-controller="Achievement" asp-route-id="@Model.Id">
     <label>Achievement name: </label><br />
@@ -14,14 +16,3 @@
 <form method="get" asp-action="Index" asp-controller="Achievement">
     <input type="submit" value="Back" />
 </form>
-
-
-<style>
-.input{
-    margin-bottom: 10px;
-}
-
-.pic{
-    padding-bottom: 5px;
-}
-</style>
