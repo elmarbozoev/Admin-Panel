@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Calendar\Index.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MailKit" Version="3.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
@@ -26,11 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Calendar\" />
     <Folder Include="wwwroot\Media\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Calendar\Index.cshtml" />
     <None Include="Views\News\CreateNews.cshtml" />
     <None Include="Views\News\EditNews.cshtml" />
     <None Include="Views\News\EditPictures.cshtml" />

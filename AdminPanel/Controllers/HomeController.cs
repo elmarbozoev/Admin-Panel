@@ -19,24 +19,5 @@ namespace AdminPanel.Controllers
         {
             return View();
         }
-
-        public async Task<IActionResult> GetAllEmployees() => View(_context.Employees.Include(x => x.Company).ToList());
-
-        [HttpPost]
-        public async Task<IActionResult> Create(string employeeName, string companyName)
-        {
-            // экземпляр класса компании
-            Company company = new Company() { Name=companyName };
-            // добавляем в базу через контекст
-            await _context.AddAsync(company);
-            // сохраняем изменения
-            await _context.SaveChangesAsync();
-
-            Employee employee = new Employee() { Name = employeeName, Company = company };
-            await _context.AddAsync(employee);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("GetAllEmployees");
-        }
     }
 }
