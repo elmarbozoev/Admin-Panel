@@ -1,0 +1,35 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.calendar {
+    margin: auto;
+    max-width: 800px;
+    font-weight: bold;
+    color: black;
+}
+
+.month {
+    display: flex;
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 60px;
+    border: 2px solid black;
+    flex-direction: column;
+    border-bottom: none;
+}
+
+table, th, td {
+    table-layout: fixed;
+    width: 100%;
+    font-size: 25px;
+    text-align: center;
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+tr, td, th {
+    padding: 15px;
+}

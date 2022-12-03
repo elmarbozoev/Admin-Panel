@@ -1,36 +1,66 @@
-﻿<table id="calendar2">
-  <thead>
-    <tr><td>‹<td colspan="5"><td>›
-    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-  <tbody>
-</table>
+﻿ 
+<link href="@Url.Content("~/css/Calendar/Index.css")" rel="stylesheet" />
 
-<style>
-    #calendar2 {
-  width: 100%;
-  font: monospace;
-  line-height: 1.2em;
-  font-size: 15px;
-  text-align: center;
-}
-#calendar2 thead tr:last-child {
-  font-size: small;
-  color: rgb(85, 85, 85);
-}
-#calendar2 thead tr:nth-child(1) td:nth-child(2) {
-  color: rgb(50, 50, 50);
-}
-#calendar2 thead tr:nth-child(1) td:nth-child(1):hover, #calendar2 thead tr:nth-child(1) td:nth-child(3):hover {
-  cursor: pointer;
-}
-#calendar2 tbody td {
-  color: rgb(44, 86, 122);
-}
-#calendar2 tbody td:nth-child(n+6), #calendar2 .holiday {
-  color: rgb(231, 140, 92);
-}
-#calendar2 tbody td.today {
-  background: rgb(220, 0, 0);
-  color: #fff;
-}
-</style>
+<div class="calendar">
+    <div class="month">
+        <strong>DECEMBER</strong>
+        <strong>2022</strong>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+            <th>Sun</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td>20</td>
+            <td>21</td>
+            <td>22</td>
+            <td>23</td>
+            <td>24</td>
+            <td>25</td>
+        </tr>
+        <tr>
+            <td>26</td>
+            <td>27</td>
+            <td>28</td>
+            <td>29</td>
+            <td>30</td>
+            <td>31</td>
+            <td></td>
+        </tr>
+    </table>
+   </div>
