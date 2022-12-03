@@ -3,6 +3,7 @@ using System;
 using AdminPanel.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221203091536_UpdEventsTable")]
+    partial class UpdEventsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,6 @@ namespace AdminPanel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
                     b.Property<int>("DayOfWeek")
                         .HasColumnType("int");
 
@@ -59,9 +58,6 @@ namespace AdminPanel.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
-
-                    b.Property<int?>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -103,7 +99,10 @@ namespace AdminPanel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfMonth")
+                    b.Property<int>("MonthId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfDays")
                         .HasColumnType("int");
 
                     b.Property<int>("Year")

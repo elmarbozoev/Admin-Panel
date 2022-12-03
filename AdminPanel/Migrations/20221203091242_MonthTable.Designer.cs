@@ -3,6 +3,7 @@ using System;
 using AdminPanel.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221203091242_MonthTable")]
+    partial class MonthTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,13 +56,16 @@ namespace AdminPanel.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("MonthId")
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MonthId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("Type")
+                    b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -103,7 +108,10 @@ namespace AdminPanel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfMonth")
+                    b.Property<int>("MonthId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfDays")
                         .HasColumnType("int");
 
                     b.Property<int>("Year")
@@ -334,13 +342,9 @@ namespace AdminPanel.Migrations
 
             modelBuilder.Entity("AdminPanel.Models.Event", b =>
                 {
-                    b.HasOne("AdminPanel.Models.Month", "Month")
+                    b.HasOne("AdminPanel.Models.Month", null)
                         .WithMany("Events")
-                        .HasForeignKey("MonthId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Month");
+                        .HasForeignKey("MonthId");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.MediaFile", b =>
