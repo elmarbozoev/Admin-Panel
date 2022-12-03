@@ -3,6 +3,7 @@ using System;
 using AdminPanel.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221201105224_CreatedEventsTable")]
+    partial class CreatedEventsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,27 +47,16 @@ namespace AdminPanel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DayOfWeek")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("MonthId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("Type")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("MonthId");
 
                     b.ToTable("Events");
                 });
@@ -95,23 +86,6 @@ namespace AdminPanel.Migrations
                     b.HasIndex("NewsId");
 
                     b.ToTable("MediaFiles");
-                });
-
-            modelBuilder.Entity("AdminPanel.Models.Month", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfMonth")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Months");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.News", b =>
@@ -332,17 +306,6 @@ namespace AdminPanel.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.Event", b =>
-                {
-                    b.HasOne("AdminPanel.Models.Month", "Month")
-                        .WithMany("Events")
-                        .HasForeignKey("MonthId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Month");
-                });
-
             modelBuilder.Entity("AdminPanel.Models.MediaFile", b =>
                 {
                     b.HasOne("AdminPanel.Models.Achievement", null)
@@ -408,11 +371,6 @@ namespace AdminPanel.Migrations
             modelBuilder.Entity("AdminPanel.Models.Achievement", b =>
                 {
                     b.Navigation("MediaFiles");
-                });
-
-            modelBuilder.Entity("AdminPanel.Models.Month", b =>
-                {
-                    b.Navigation("Events");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.News", b =>
