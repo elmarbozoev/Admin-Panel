@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221203100053_EventsMonthsTablesUpdate")]
-    partial class EventsMonthsTablesUpdate
+    [Migration("20221213092041_AddCalTbl")]
+    partial class AddCalTbl
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,7 @@ namespace AdminPanel.Migrations
                     b.ToTable("Achievements");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.Event", b =>
+            modelBuilder.Entity("AdminPanel.Models.CalendarItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,14 +50,31 @@ namespace AdminPanel.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<int>("DayOfWeek")
+                    b.Property<string>("DayOfWeek")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CalendarItems");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CalendarItemId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
-
-                    b.Property<int>("MonthId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
@@ -67,7 +84,7 @@ namespace AdminPanel.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MonthId");
+                    b.HasIndex("CalendarItemId");
 
                     b.ToTable("Events");
                 });
@@ -97,23 +114,6 @@ namespace AdminPanel.Migrations
                     b.HasIndex("NewsId");
 
                     b.ToTable("MediaFiles");
-                });
-
-            modelBuilder.Entity("AdminPanel.Models.Month", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("MonthId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Months");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.News", b =>
@@ -336,13 +336,11 @@ namespace AdminPanel.Migrations
 
             modelBuilder.Entity("AdminPanel.Models.Event", b =>
                 {
-                    b.HasOne("AdminPanel.Models.Month", "Month")
+                    b.HasOne("AdminPanel.Models.CalendarItem", null)
                         .WithMany("Events")
-                        .HasForeignKey("MonthId")
+                        .HasForeignKey("CalendarItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Month");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.MediaFile", b =>
@@ -412,7 +410,7 @@ namespace AdminPanel.Migrations
                     b.Navigation("MediaFiles");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.Month", b =>
+            modelBuilder.Entity("AdminPanel.Models.CalendarItem", b =>
                 {
                     b.Navigation("Events");
                 });
