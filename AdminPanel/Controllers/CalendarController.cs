@@ -1,6 +1,7 @@
 ﻿using AdminPanel.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AdminPanel.Controllers
 {
@@ -13,13 +14,31 @@ namespace AdminPanel.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var days = await _context.CalendarItems.Include(x => x.Events).Where(x => x.Month == DateTime.Now.Month && x.Year == DateTime.Now.Year).ToListAsync();
-            return View(days);
+            return View();
         }
 
+        public async Task<IActionResult> Create(string dateEvent, string name, string description)
+        {
+            var day = "";
+            var month = "";
+            var year = "";
+            foreach(var i in dateEvent.Split())
+            {
+                year = i.Split('-')[2];
+                month = i.Split('-')[1];
+                day = i.Split("-")[0];
+            }
+            Calendar calendar = new Calendar() { Month = month, Year = year };
+            await _context.Calendars.AddAsync(calendar);
+            await _context.SaveChangesAsync();
 
+            Event @event = new Event() { Day = day, Name = name, Description = description, Calendar = calendar };
+            await _context.Events.AddAsync(@event);
+            await _context.SaveChangesAsync();
 
+            return View("Index");
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using AdminPanel.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221215091106_UpdCalendarTable")]
+    partial class UpdCalendarTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,8 +69,8 @@ namespace AdminPanel.Migrations
                     b.Property<int?>("CalendarId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Day")
-                        .HasColumnType("longtext");
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
