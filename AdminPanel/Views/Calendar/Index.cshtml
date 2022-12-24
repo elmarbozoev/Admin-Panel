@@ -1,30 +1,50 @@
+@model Calendar
+
 <!DOCTYPE html>
 <html lang='en'>
 <head>
     <meta charset='utf-8' />
     <link href='~/lib/main.css' rel='stylesheet' />
     <script src='~/lib/main.js'></script>
+    <script src='~/lib/jquery/dist/jquery.min.js'></script>
     <script>
 
+        function GetText(jqueryList)
+        {
+            var textList = [];
+            for (let i in jqueryList) {
+                textList.push(i.innerText);
+            }
+            return textList;
+        }
+
+
         document.addEventListener('DOMContentLoaded', function () {
+            var eventTitles = $(".event-title");
+            var eventDates = $(".event-date");
+            console.log(eventTitles);
+            var eventsList = [];
+            for (let i = 0; i < eventTitles.length; i++) {
+                eventsList.push({ title: eventTitles[i].innerText, start: eventDates[i].innerText });
+            }
+            console.log(eventsList);
+            //var dict = eventTitles.map((title, i) => ({ title, start: eventDates[i]}));
+            //console.log(dict);
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 selectable: true,
                 dateClick: function (info) {
-                    var dateEvents = $(".dateEvent").val(info.dateStr)
-                    var nameEvents = $(".nameEvent").val()
+                    var dateEvents = $('#dateEvent').val(info.dateStr)
+                    var nameEvents = $('#nameEvent').val()
                 },
                 select: function (info) {
                     alert('clicked:' + info.dateStr)
-                }
+                },
+                events : eventsList,
+                eventColor: '#13F86F'
             });
             calendar.render();
-
-            var myVar = $(".fc-daygrid-day-frame");
-            console.log(myVar);
-
-
         });
 
     </script>
@@ -40,5 +60,13 @@
         <input type="submit" />
     </form>
     <div id='calendar'></div>
+    @if (Model is not null)
+    {
+        @foreach (var item in Model?.Events)
+        {
+            <p class="event-title" hidden>@item.Name</p>
+            <p class="event-date" hidden>@Model.Year-@Model.Month-@item.Day</p>
+        }
+    }
 </body>
 </html>
