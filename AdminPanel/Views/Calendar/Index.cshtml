@@ -1,84 +1,72 @@
-<link href="@Url.Content("~/css/Calendar/Index.css")" rel="stylesheet" />
+@model Calendar
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/jquery-1.3.min.js" type="text/javascript"> </script>
-    <link rel="stylesheet" href="css/master.css" type="text/css" media="screen" charset="utf-8" />
-    <script src="./js/calscr.js"></script>
-    <script src="https://use.fontawesome.com/9b8c2c2724.js"></script>
-    <title>Document</title>
+    <meta charset='utf-8' />
+    <link href='~/lib/main.css' rel='stylesheet' />
+    <script src='~/lib/main.js'></script>
+    <script src='~/lib/jquery/dist/jquery.min.js'></script>
+    <script>
+
+        function GetText(jqueryList)
+        {
+            var textList = [];
+            for (let i in jqueryList) {
+                textList.push(i.innerText);
+            }
+            return textList;
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var eventTitles = $(".event-title");
+            var eventDates = $(".event-date");
+            console.log(eventTitles);
+            var eventsList = [];
+            for (let i = 0; i < eventTitles.length; i++) {
+                eventsList.push({ title: eventTitles[i].innerText, start: eventDates[i].innerText });
+            }
+            console.log(eventsList);
+            //var dict = eventTitles.map((title, i) => ({ title, start: eventDates[i]}));
+            //console.log(dict);
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                selectable: true,
+                dateClick: function (info) {
+                    var dateEvents = $('#dateEvent').val(info.dateStr)
+                    var nameEvents = $('#nameEvent').val()
+                },
+                select: function (info) {
+                    alert('clicked:' + info.dateStr)
+                },
+                events : eventsList,
+                eventColor: '#13F86F'
+            });
+            calendar.render();
+        });
+
+    </script>
 </head>
 <body>
-   <div class="calendar">
-    <div class="month">
-        <i class="fa-solid fa-chevron-right"></i>
-        <div class="text">
-            <strong>DECEMBER</strong>
-            <strong>2022</strong>
-        </div>
-        <i class="fa-solid fa-chevron-left"></i>
-    </div>
-    
-    <table>
-        <tr>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thu</th>
-            <th>Fri</th>
-            <th>Sat</th>
-            <th>Sun</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-        </tr>
-        <tr>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-            <td>15</td>
-            <td>16</td>
-            <td>17</td>
-            <td>18</td>
-        </tr>
-        <tr>
-            <td>19</td>
-            <td>20</td>
-            <td>21</td>
-            <td>22</td>
-            <td>23</td>
-            <td>24</td>
-            <td>25</td>
-        </tr>
-        <tr>
-            <td>26</td>
-            <td>27</td>
-            <td>28</td>
-            <td>29</td>
-            <td>30</td>
-            <td>31</td>
-            <td></td>
-        </tr>
-    </table>
-   </div>
+    <form asp-action="Create" asp-controller="Calendar" method="post">
+        <label for="nameEvent">Event name: </label>
+        <input type="text" name="name" id="nameEvent" />
+        <label for="descriptionEvent">Event description: </label>
+        <input type="text" name="description" id="descriptionEvent"/>
+        <label for="dateEvent">Event date: </label>
+        <input type="text" name="dateEvent" id="dateEvent"/>
+        <input type="submit" />
+    </form>
+    <div id='calendar'></div>
+    @if (Model is not null)
+    {
+        @foreach (var item in Model?.Events)
+        {
+            <p class="event-title" hidden>@item.Name</p>
+            <p class="event-date" hidden>@Model.Year-@Model.Month-@item.Day</p>
+        }
+    }
 </body>
 </html>

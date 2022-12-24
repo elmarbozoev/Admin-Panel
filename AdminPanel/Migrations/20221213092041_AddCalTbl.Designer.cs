@@ -3,6 +3,7 @@ using System;
 using AdminPanel.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdminPanel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221213092041_AddCalTbl")]
+    partial class AddCalTbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,23 +41,27 @@ namespace AdminPanel.Migrations
                     b.ToTable("Achievements");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.Calendar", b =>
+            modelBuilder.Entity("AdminPanel.Models.CalendarItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Month")
-                        .IsRequired()
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DayOfWeek")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Year")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Calendars");
+                    b.ToTable("CalendarItems");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.Event", b =>
@@ -64,11 +70,8 @@ namespace AdminPanel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CalendarId")
+                    b.Property<int>("CalendarItemId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Day")
-                        .HasColumnType("longtext");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
@@ -76,9 +79,12 @@ namespace AdminPanel.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("Type")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CalendarId");
+                    b.HasIndex("CalendarItemId");
 
                     b.ToTable("Events");
                 });
@@ -330,11 +336,11 @@ namespace AdminPanel.Migrations
 
             modelBuilder.Entity("AdminPanel.Models.Event", b =>
                 {
-                    b.HasOne("AdminPanel.Models.Calendar", "Calendar")
+                    b.HasOne("AdminPanel.Models.CalendarItem", null)
                         .WithMany("Events")
-                        .HasForeignKey("CalendarId");
-
-                    b.Navigation("Calendar");
+                        .HasForeignKey("CalendarItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AdminPanel.Models.MediaFile", b =>
@@ -404,7 +410,7 @@ namespace AdminPanel.Migrations
                     b.Navigation("MediaFiles");
                 });
 
-            modelBuilder.Entity("AdminPanel.Models.Calendar", b =>
+            modelBuilder.Entity("AdminPanel.Models.CalendarItem", b =>
                 {
                     b.Navigation("Events");
                 });
