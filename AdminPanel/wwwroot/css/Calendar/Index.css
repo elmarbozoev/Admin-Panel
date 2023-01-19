@@ -3,50 +3,55 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-.calendar {
-    margin: auto;
-    max-width: 800px;
-    font-weight: bold;
+.modal__name {
+    padding-right: 25px;
+    font-size: 25px;
+    padding-bottom: 13px;
+}
+.modal__create {
+    width: 113px;
+    height: 37px;
+    font-size: 21px;
+    border: 0.1px solid black;
+    border-radius: 7px;
+    text-align: center;
+    background-color: lightgray;
+}
+.modal-tittle {
+    font-size: 30px;
+}
+.modal-content {
+    border-radius: 7px;
+}
+.fc .fc-col-header-cell-cushion {
+    text-decoration: none;
     color: black;
 }
-
-.month {
-    display: flex;
+.fc .fc-daygrid-day-number {
+    color: black;
+    text-decoration-line: none;
+}
+.edit__edit {
+    width: 113px;
+    height: 37px;
+    font-size: 21px;
+    border: 0.1px solid black;
+    border-radius: 7px;
     text-align: center;
-    letter-spacing: 1px;
-    font-size: 60px;
-    border: 2px solid black;
-    justify-content: space-around;
-    border-bottom: none;
+    background-color: lightgray;
+    margin-top: 13px;
+    margin-bottom: 13px;
 }
-
-.text {
-    display: flex;
-    flex-direction: column;
-}
-
-table, th, td {
-    table-layout: fixed;
-    width: 100%;
+.edit__name {
+    padding-right: 25px;
     font-size: 25px;
+}
+.edit__del {
+    width: 113px;
+    height: 37px;
+    font-size: 21px;
+    border: 0.1px solid black;
+    border-radius: 7px;
     text-align: center;
-    border: 2px solid black;
-    border-collapse: collapse;
-}
-
-tr, td, th {
-    padding: 15px;
-}
-
-.month i {
-    margin-top: 30px;
-}
-
-td div {
-    width: 100%;
-    height: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    background-color: lightgray;
 }

@@ -1,25 +1,28 @@
 ﻿@model AdminPanel.ViewModels.LoginViewModel
-<h2>вход в приложение</h2>
+<link href="~/css/Account/Login.css" rel="stylesheet">
+<h2>Вход в аккаунт</h2>
 <form method="post" asp-action="Login" asp-controller="Account" asp-route-returnUrl="@Model.ReturnUrl">
     <div asp-validation-summary="ModelOnly"></div>
     <div>
-        <label asp-for="Email"></label><br />
+        <label class="login__email" asp-for="Email"></label><br />
         <input asp-for="Email" />
         <span asp-validation-for="Email"></span>
     </div>
 
     <div>
-        <label asp-for="Password"></label><br />
+        <label class="login__password" asp-for="Password"></label><br />
         <input asp-for="Password" />
         <span asp-validation-for="Password"></span>
     </div>
 
-    <div>
-        <label asp-for="RememberMe"></label><br />
+    <div class="login__rememberme__row">
+        <label class="login__rememberme" asp-for="RememberMe">Запомнить меня</label><br />
         <input asp-for="RememberMe" />
     </div>
     <div>
-        <input type="submit"  value="Лгин"/>
+        <input class="login__signin" type="submit"  value="Вход"/>
     </div>
+
+
 
 </form>

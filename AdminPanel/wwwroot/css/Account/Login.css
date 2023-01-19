@@ -1,0 +1,28 @@
+﻿*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+.login__password{
+    padding-top:15px;
+}
+.login__rememberme__row{
+    display:flex;
+}
+.login__rememberme{
+    padding-top:10px;
+    padding-right:5px;
+}
+.login__signin {
+    width: 113px;
+    height: 37px;
+    font-size: 21px;
+    border: 0.1px solid black;
+    border-radius: 7px;
+    text-align: center;
+    background-color: lightgray;
+    margin-top:15px;
+}
+#RememberMe{
+    margin-top:15px
+}
