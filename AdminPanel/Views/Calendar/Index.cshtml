@@ -5,41 +5,39 @@
 <head>
     <meta charset='utf-8' />
     <link href='~/lib/main.css' rel='stylesheet' />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src='~/lib/main.js'></script>
     <script src='~/lib/jquery/dist/jquery.min.js'></script>
     <script>
 
-        function GetText(jqueryList)
-        {
-            var textList = [];
-            for (let i in jqueryList) {
-                textList.push(i.innerText);
-            }
-            return textList;
-        }
-
-
         document.addEventListener('DOMContentLoaded', function () {
+            var eventIds = $(".event-id");
             var eventTitles = $(".event-title");
             var eventDates = $(".event-date");
-            console.log(eventTitles);
             var eventsList = [];
             for (let i = 0; i < eventTitles.length; i++) {
-                eventsList.push({ title: eventTitles[i].innerText, start: eventDates[i].innerText });
+                eventsList.push({ id: eventIds[i].innerText, title: eventTitles[i].innerText, start: eventDates[i].innerText });
             }
-            console.log(eventsList);
-            //var dict = eventTitles.map((title, i) => ({ title, start: eventDates[i]}));
-            //console.log(dict);
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 selectable: true,
                 dateClick: function (info) {
-                    var dateEvents = $('#dateEvent').val(info.dateStr)
-                    var nameEvents = $('#nameEvent').val()
+                    $('#create-event-date').val(info.dateStr);
+                    var modal = new bootstrap.Modal(document.getElementById("create-event-modal"));
+                    modal.show();
+                },
+                eventClick: function(info) {
+                    $('#edit-event-id').val(info.event.id);
+                    $('#delete-event-id').val(info.event.id);
+                    $('#edit-event-name').val(info.event.title);
+                    console.log(info.event.start);
+                    var modal = new bootstrap.Modal(document.getElementById("edit-event-modal"));
+                    modal.show();
                 },
                 select: function (info) {
-                    alert('clicked:' + info.dateStr)
+                    //alert('clicked:' + info.dateStr)
                 },
                 events : eventsList,
                 eventColor: '#13F86F'
@@ -50,20 +48,53 @@
     </script>
 </head>
 <body>
-    <form asp-action="Create" asp-controller="Calendar" method="post">
-        <label for="nameEvent">Event name: </label>
-        <input type="text" name="name" id="nameEvent" />
-        <label for="descriptionEvent">Event description: </label>
-        <input type="text" name="description" id="descriptionEvent"/>
-        <label for="dateEvent">Event date: </label>
-        <input type="text" name="dateEvent" id="dateEvent"/>
-        <input type="submit" />
-    </form>
+    <div class="modal fade" id="create-event-modal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Create event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="create-event-form" asp-action="Create" asp-controller="Calendar" method="post">
+                        <label for="create-event-name">Event name: </label>
+                        <input type="text" name="name" id="create-event-name" /><br />
+                        <input type="text" name="eventDate" id="create-event-date" hidden />
+                        <input type="submit" value="Create"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="edit-event-modal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Edit event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="Edit" asp-controller="Calendar" method="post">
+                        <input type="text" name="eventId" id="edit-event-id" hidden />
+                        <label for="edit-event-name">Event name: </label>
+                        <input type="text" name="name" id="edit-event-name" /><br />
+                        <input type="submit" value="Edit"/><br />
+                    </form>
+                    <form asp-action="Delete" asp-controller="Calendar" method="post">
+                        <label for="delete-event-id" hidden>Event id: </label>
+                        <input type="text" name="eventId" id="delete-event-id" hidden/>
+                        <input type="submit" value="Delete" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id='calendar'></div>
     @if (Model is not null)
     {
         @foreach (var item in Model?.Events)
         {
+            <p class="event-id" hidden>@item.Id</p>
             <p class="event-title" hidden>@item.Name</p>
             <p class="event-date" hidden>@Model.Year-@Model.Month-@item.Day</p>
         }
