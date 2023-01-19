@@ -32,8 +32,7 @@
                     $('#edit-event-id').val(info.event.id);
                     $('#delete-event-id').val(info.event.id);
                     $('#edit-event-name').val(info.event.title);
-                    $('#edit-event-description').val($('#event-description-'+info.event.start.end).innerText);
-                    console.log(info.event.start.end);
+                    console.log(info.event.start);
                     var modal = new bootstrap.Modal(document.getElementById("edit-event-modal"));
                     modal.show();
                 },
@@ -60,10 +59,7 @@
                     <form id="create-event-form" asp-action="Create" asp-controller="Calendar" method="post">
                         <label for="create-event-name">Event name: </label>
                         <input type="text" name="name" id="create-event-name" /><br />
-                        <label for="create-event-description">Event description: </label>
-                        <input type="text" name="description" id="create-event-description" /><br />
-                        <label for="create-event-date">Event date: </label>
-                        <input type="text" name="eventDate" id="create-event-date" /><br />
+                        <input type="text" name="eventDate" id="create-event-date" hidden />
                         <input type="submit" value="Create"/>
                     </form>
                 </div>
@@ -79,17 +75,14 @@
                 </div>
                 <div class="modal-body">
                     <form asp-action="Edit" asp-controller="Calendar" method="post">
-                        <label for="edit-event-id">Event id: </label>
-                        <input type="text" name="eventId" id="edit-event-id" /><br />
+                        <input type="text" name="eventId" id="edit-event-id" hidden />
                         <label for="edit-event-name">Event name: </label>
                         <input type="text" name="name" id="edit-event-name" /><br />
-                        <label for="edit-event-description">Event description: </label>
-                        <input type="text" name="description" id="edit-event-description" /><br />
                         <input type="submit" value="Edit"/><br />
                     </form>
                     <form asp-action="Delete" asp-controller="Calendar" method="post">
-                        <label for="delete-event-id">Event id: </label>
-                        <input type="text" name="eventId" id="delete-event-id" /><br />
+                        <label for="delete-event-id" hidden>Event id: </label>
+                        <input type="text" name="eventId" id="delete-event-id" hidden/>
                         <input type="submit" value="Delete" />
                     </form>
                 </div>
@@ -104,7 +97,6 @@
             <p class="event-id" hidden>@item.Id</p>
             <p class="event-title" hidden>@item.Name</p>
             <p class="event-date" hidden>@Model.Year-@Model.Month-@item.Day</p>
-            <p id="event-description-@Model.Year-@Model.Month-@item.Day" hidden>@item.Description</p>
         }
     }
 </body>

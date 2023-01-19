@@ -37,7 +37,7 @@ namespace AdminPanel.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            Event @event = new Event() { Day = day, Name = name, Description = description, Calendar = calendar };
+            Event @event = new Event() { Day = day, Name = name, Calendar = calendar };
             await _context.Events.AddAsync(@event);
             await _context.SaveChangesAsync();
 
@@ -45,11 +45,10 @@ namespace AdminPanel.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int eventId, string name, string description)
+        public async Task<IActionResult> Edit(int eventId, string name)
         {
             var @event = await _context.Events.FindAsync(eventId);
             @event.Name = name;
-            @event.Description = description;
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
