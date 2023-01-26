@@ -1,5 +1,6 @@
 ﻿using AdminPanel.Interfaces;
 using AdminPanel.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,13 @@ namespace AdminPanel.Controllers
             _environment = environment;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index() => View(await _context.News.Include(x => x.MediaFiles).ToListAsync());
 
+        [Authorize]
         public async Task<IActionResult> Details(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
+        [Authorize]
         public async Task<IActionResult> Update(int id) => View(await _context.Achievements.FindAsync(id));
 
         [HttpPost]
@@ -44,6 +48,7 @@ namespace AdminPanel.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Create() => View();
 
         [HttpPost]
@@ -70,6 +75,7 @@ namespace AdminPanel.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public async Task<IActionResult> UpdateMedia(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
         [HttpPost]
