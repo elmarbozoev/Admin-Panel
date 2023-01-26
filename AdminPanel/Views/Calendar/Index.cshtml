@@ -41,7 +41,30 @@
                     //alert('clicked:' + info.dateStr)
                 },
                 events : eventsList,
-                eventColor: '#76828E'
+                eventColor: '#76828E',
+                customButtons: {
+                    prev: {
+                        text: '<',
+                        click: function() {
+                            calendar.prev();
+                            var date = calendar.getDate();
+                            var month = date.getMonth() + 1;
+                            var year = date.getFullYear();
+                            location.href = '/Calendar/Index?month='+month+'&year='+year;
+                        }
+                    },
+                    next: {
+                        text: '>',
+                        click: function() {
+                            calendar.next();
+                            var date = calendar.getDate();
+                            var month = date.getMonth()+1;
+                            var year = date.getFullYear();
+                            location.href = '/Calendar/Index?month='+month+'&year='+year;
+                        }
+                    }
+                },
+                initialDate: '@(Model.Year)-@(Model.Month)'
             });
             calendar.render();
         });
