@@ -1,4 +1,5 @@
 ﻿using AdminPanel.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,15 +15,22 @@ namespace AdminPanel.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int month, int year)
         {
-            var eventList = await _context.Calendars.Include(x => x.Events).FirstOrDefaultAsync(x => x.Month == (DateTime.Now.Month <= 10 ? '0' + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString()) && x.Year == DateTime.Now.Year.ToString());
-            return View(eventList);
+            if (month == 0 && year == 0)
+            {
+                month = DateTime.Now.Month;
+                year = DateTime.Now.Year;
+            }
+            var calendar = await _context.Calendars.Include(x => x.Events).FirstOrDefaultAsync(x => x.Month == (month <= 10 ? '0' + month.ToString() : month.ToString()) && x.Year == year.ToString());
+            if (calendar is null) calendar = new Calendar() { Month = month.ToString(), Year = year.ToString() };
+            return View(calendar);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string eventDate, string name, string description)
+        public async Task<IActionResult> Create(string eventDate, string name)
         {
             var year = eventDate.Split('-')[0];
             var month = eventDate.Split('-')[1];
@@ -41,7 +49,7 @@ namespace AdminPanel.Controllers
             await _context.Events.AddAsync(@event);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { month = int.Parse(month), year = int.Parse(year) });
         }
 
         [HttpPost]
@@ -49,8 +57,10 @@ namespace AdminPanel.Controllers
         {
             var @event = await _context.Events.FindAsync(eventId);
             @event.Name = name;
+            int month = int.Parse(@event.Calendar.Month);
+            int year = int.Parse(@event.Calendar.Year);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { month = month, year = year });
         }
 
         [HttpPost]
@@ -61,13 +71,15 @@ namespace AdminPanel.Controllers
             _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
             var calendar = await _context.Calendars.Include(x => x.Events).FirstOrDefaultAsync(x => x.Id == calendarId);
+            int month = int.Parse(calendar.Month);
+            int year = int.Parse(calendar.Year);
             if (calendar.Events.Count == 0)
             {
                 _context.Calendars.Remove(calendar);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { month = month, year = year });
         }
     }
 }

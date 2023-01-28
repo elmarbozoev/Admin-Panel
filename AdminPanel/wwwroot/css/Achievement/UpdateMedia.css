@@ -22,3 +22,33 @@
 .input {
     margin-bottom: 10px;
 }
+.vibor__update {
+    width: 123px;
+    height: 26px;
+    font-size: 16px;
+    border: 0.1px solid black;
+    border-radius: 4px;
+    text-align: center;
+    background: none;
+    margin-bottom: 10px;
+    margin-top:5px;
+}
+.add__update {
+    width: 50px;
+    height: 26px;
+    font-size: 16px;
+    border: 0.1px solid black;
+    border-radius: 4px;
+    text-align: center;
+    background: none;
+    margin-bottom: 10px;
+}
+.back__update {
+    width: 55px;
+    height: 26px;
+    font-size: 16px;
+    border: 0.1px solid black;
+    border-radius: 4px;
+    text-align: center;
+    background: none;
+}

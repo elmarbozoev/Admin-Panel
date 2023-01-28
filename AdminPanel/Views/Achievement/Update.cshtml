@@ -1,14 +1,17 @@
 ﻿@model Achievement
+@{
+    Layout = "_Layout";
 
+}
 <link href="@Url.Content("~/wwwroot/css/Achievement/Update.css")" />
 
 <h2>Edit the achievement</h2>
 <form method="post" asp-action="Update" asp-controller="Achievement" asp-route-id="@Model.Id">
     <label>Achievement name: </label><br />
-    <input class="input" name="name" type="text"/><br />
+    <input class="input" name="name" type="text" value="@Model.Name"/><br />
 
     <label >Achievement description: </label><br />
-      <textarea class="input" name="description" type="text"></textarea><br />
+    <textarea class="input" name="description" type="text">@Model.Description</textarea><br />
 
     <input class="input" type="submit" value="Save changes" />
 </form>

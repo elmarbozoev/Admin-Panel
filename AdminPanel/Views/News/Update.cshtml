@@ -2,12 +2,12 @@
 
 
 <h2>Edit the news</h2>
-<form method="post" asp-controller="News" asp-action="Update" asp-route-contentId="@Model.Id">
+<form method="post" asp-controller="News" asp-action="Update" asp-route-id="@Model.Id">
     <label for="news-name">News name: </label><br />
     <input class="input" id="news-name" type="text" value="@Model.Name" name="name" /><br />
 
     <label for="news-description">News description: </label><br />
-      <textarea class="input" id="news-description" type="text" name="description" value="@Model.Description"></textarea><br />
+    <textarea class="input" id="news-description" type="text" name="description">@Model.Description</textarea><br />
 
     <input class="input" type="submit" value="Save changes" />
 </form>
