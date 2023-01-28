@@ -14,14 +14,28 @@
     padding-right:5px;
 }
 .login__signin {
-    width: 113px;
-    height: 37px;
-    font-size: 21px;
+    width: 64px;
+    height: 26px;
+    font-size: 16px;
     border: 0.1px solid black;
-    border-radius: 7px;
+    border-radius: 4px;
     text-align: center;
-    background-color: lightgray;
-    margin-top:15px;
+    background: none;
+    margin-top: 15px;
+    margin-right: 6px;
+    margin-bottom:15px;
+}
+.reg__signin {
+    width: 124px;
+    height: 25px;
+    font-size: 16px;
+    border: 0.1px solid black;
+    border-radius: 4px;
+    text-align: center;
+    background: none;
+}
+.buttons__row{
+    display:flex;
 }
 #RememberMe{
     margin-top:15px

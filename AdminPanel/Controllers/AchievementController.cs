@@ -29,7 +29,7 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id, string name, string description)
         {
-            var achievement = await _context.News.FindAsync(id);
+            var achievement = await _context.Achievements.FindAsync(id);
             achievement.Name = name;
             achievement.Description = description;
             await _context.SaveChangesAsync();
@@ -47,6 +47,7 @@ namespace AdminPanel.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult Create() => View();
 
         [HttpPost]

@@ -3,7 +3,10 @@
 @{
     var mediaFiles = Model.MediaFiles.ToList();
 }
+@{
+    Layout = "_Layout";
 
+}
 <link href="@Url.Content("~/css/Achievement/UpdateMedia.css")" rel="stylesheet" />
 
 <div class="media__files">
@@ -30,10 +33,10 @@
 
 <form method="post" asp-action="AddMediaFiles" asp-controller="Achievement" asp-route-id="@Model.Id" enctype="multipart/form-data">
     <label class="pic">Add media files:</label><br />
-    <input class="input" type="file" multiple name="uploadedFiles" /><br />
-    <input class="input" type="submit" value="Add" />
+    <input class="vibor__update" type="file" multiple name="uploadedFiles" /><br />
+    <input class="add__update" type="submit" value="Add" />
 </form>
 
 <form method="get" asp-action="Index" asp-controller="Achievement">
-    <input type="submit" value="Back" />
+    <input class="back__update" type="submit" value="Back" />
 </form>

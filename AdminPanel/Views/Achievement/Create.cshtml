@@ -1,21 +1,24 @@
 ﻿@model DateTime
+@{
+    Layout = "_Layout";
 
+}
 <link href="@Url.Content("~/wwwroot/css/Achievement/Create.css")" />
 
 <h2>Create achievement</h2>
-<form method="post" asp-action="Create" asp-controller="Achievement" asp-route-dateOfPublication="@DateTime.Now.ToString()">
+<form method="post" asp-action="Create" asp-controller="Achievement" asp-route-dateOfPublication="@DateTime.Now.ToString()" enctype="multipart/form-data">
     <label>Achievement name:</label><br />
     <input class="input" name="name" type="text"/><br />
 
-    <label>Achievement description:</label><br />
+    <label class ="text__create">Achievement description:</label><br />
     <textarea class="input" name="description"  type="text"></textarea><br />
 
-    <label class="pic">Achievemnt pictures:</label><br />
-    <input class="input" type="file" multiple name="uploadedFiles" value="Choose pictures" /><br />
+    <label class="text__create">Achievemnt pictures:</label><br />
+    <input class="chose__button" type="file" multiple name="uploadedFiles" value="Choose pictures" /><br />
 
-    <input class="input" type="submit" value="Create" />
+    <input class="create__button" type="submit" value="Create" />
 </form>
 
 <form asp-action="Index" asp-controller="Achievement">
-    <input type="submit" value="Back" />
+    <input class="back__button" type="submit" value="Back" />
 </form>

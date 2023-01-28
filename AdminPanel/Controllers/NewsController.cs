@@ -20,13 +20,16 @@ namespace AdminPanel.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Index() => View(await _context.News.Include(x => x.MediaFiles).ToListAsync());
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Details(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
         [Authorize]
-        public async Task<IActionResult> Update(int id) => View(await _context.Achievements.FindAsync(id));
+        [HttpGet]
+        public async Task<IActionResult> Update(int id) => View(await _context.News.FindAsync(id));
 
         [HttpPost]
         public async Task<IActionResult> Update(int id, string name, string description)
@@ -49,6 +52,7 @@ namespace AdminPanel.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult Create() => View();
 
         [HttpPost]
@@ -76,6 +80,7 @@ namespace AdminPanel.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> UpdateMedia(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
         [HttpPost]
