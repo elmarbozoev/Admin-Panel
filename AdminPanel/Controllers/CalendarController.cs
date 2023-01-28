@@ -15,7 +15,7 @@ namespace AdminPanel.Controllers
             _context = context;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index(int month, int year)
         {
