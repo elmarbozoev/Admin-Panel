@@ -29,7 +29,7 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id, string name, string description)
         {
-            var achievement = await _context.News.FindAsync(id);
+            var achievement = await _context.Achievements.FindAsync(id);
             achievement.Name = name;
             achievement.Description = description;
             await _context.SaveChangesAsync();
@@ -40,6 +40,11 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var achievement = await _context.Achievements.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id);
+            foreach(var mediaFile in achievement.MediaFiles)
+            {
+                System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
+            }
+            _context.MediaFiles.RemoveRange(achievement.MediaFiles);
             _context.Achievements.Remove(achievement);
             await _context.SaveChangesAsync();
 
@@ -47,6 +52,7 @@ namespace AdminPanel.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult Create() => View();
 
         [HttpPost]
@@ -80,6 +86,7 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> DeleteMediaFile(int id, int mediaId)
         {
             var mediaFile = await _context.MediaFiles.FindAsync(mediaId);
+            System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
             _context.MediaFiles.Remove(mediaFile);
             await _context.SaveChangesAsync();
             return RedirectToAction("UpdateMedia", new { id = id });

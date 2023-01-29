@@ -1,4 +1,5 @@
-﻿using AdminPanel.Models;
+﻿using AdminPanel.Interfaces;
+using AdminPanel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +25,9 @@ namespace AdminPanel.Controllers
                 month = DateTime.Now.Month;
                 year = DateTime.Now.Year;
             }
-            var eventList = await _context.Calendars.Include(x => x.Events).FirstOrDefaultAsync(x => x.Month == (month <= 10 ? '0' + month.ToString() : month.ToString()) && x.Year == year.ToString());
-            return View(eventList);
+            var calendar = await _context.Calendars.Include(x => x.Events).FirstOrDefaultAsync(x => x.Month == (month <= 10 ? '0' + month.ToString() : month.ToString()) && x.Year == year.ToString());
+            if (calendar is null) calendar = new Calendar() { Month = month.ToString(), Year = year.ToString() };
+            return View(calendar);
         }
 
         [HttpPost]

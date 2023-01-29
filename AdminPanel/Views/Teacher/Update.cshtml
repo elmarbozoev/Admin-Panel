@@ -1,0 +1,32 @@
+﻿@model Teacher
+@{
+    Layout = "_Layout";
+
+}
+<link href="@Url.Content("~/wwwroot/css/Achievement/Update.css")" />
+
+<h2>Edit the achievement</h2>
+<form method="post" asp-action="Update" asp-controller="Teacher" asp-route-id="@Model.Id" enctype="multipart/form-data">
+    <label>Teacher's name': </label><br />
+    <input class="input" name="name" type="text" value="@Model.Name"/><br />
+
+    <label>Subject: </label><br />
+    <textarea class="input" name="subject" type="text">@Model.Subject</textarea><br />
+
+    <label>Profile picture: </label><br />
+    @if (Model.ProfilePicture is not null)
+    {
+        <img height="80px" src="@Model.ProfilePicture.Path" alt="@Model.ProfilePicture.Name">
+    }
+    else
+    {
+        <span>No picture</span>
+    }<br />
+    <input class="input" type="file" name="profilePicture" value="Choose picture" /><br />
+
+    <input class="input" type="submit" value="Save changes" />
+</form>
+
+<form method="get" asp-action="Index" asp-controller="Teacher">
+    <input type="submit" value="Back" />
+</form>

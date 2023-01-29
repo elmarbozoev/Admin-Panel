@@ -1,6 +1,9 @@
 ﻿@model AdminPanel.ViewModels.RegisterViewModel
 
+@{
+    Layout = "_Layout";
 
+}
 <h2>Регистрация нового пользователя</h2>
 <form method="post" asp-controller="Account" asp-action="Register">
    @* если пользовталеь некорректно ввел данные, то ошибки будут отражаться уровня модели,

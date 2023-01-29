@@ -19,6 +19,7 @@ td {
 .input {
     margin-top: 5px;
 }
+
 .text__create {
     padding-top: 15px:;
 }
@@ -35,6 +36,7 @@ td {
     margin-right: 6px;
     margin-bottom: 15px;
 }
+
 .update__button {
     width: 150px;
     height: 26px;
@@ -44,6 +46,7 @@ td {
     text-align: center;
     background: none;
 }
+
 .edita__button {
     width: 55px;
     height: 26px;
@@ -56,6 +59,7 @@ td {
     margin-right: 6px;
     margin-bottom: 15px;
 }
+
 .delete__button {
     width: 60px;
     height: 26px;

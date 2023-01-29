@@ -1,5 +1,8 @@
 @model List<Achievement>
+@{
+    Layout = "_Layout";
 
+}
 <link href="@Url.Content("~/css/Achievement/Index.css")" rel="stylesheet" />
 
 <table class="table">
@@ -13,7 +16,7 @@
     @foreach(var achievement in Model)
     {
         <tr>
-            <td>@achievement.Name</td>
+            <td><a asp-action="Details" asp-controller="Achievement" asp-route-id="@achievement.Id">@achievement.Name</a></td>
             <td>@achievement.Description</td>
             <td>
                 @if(achievement.MediaFiles.Count != 0)
@@ -31,17 +34,17 @@
                     }
                 }
                 <form method="get" asp-action="UpdateMedia" asp-controller="Achievement" asp-route-id="@achievement.Id">
-                    <input class="input" type="submit" value="Update media files" />
+                    <input class="update__button" type="submit" value="Update media files" />
                 </form>
             </td>
             <td>
                 <form method="get" asp-action="Update" asp-controller="Achievement" asp-route-id="@achievement.Id">
-                    <input type="submit" value="Edit" />
+                    <input class="edita__button" type="submit" value="Edit" />
                 </form>
             </td>
             <td>
                 <form method="post" asp-action="Delete" asp-controller="Achievement" asp-route-id="@achievement.Id">
-                    <input type="submit" value="Delete" />
+                    <input class="delete__button" type="submit" value="Delete" />
                 </form>
             </td>
             <td>@achievement.DateOfPublication</td>
@@ -50,5 +53,5 @@
 </table>
 
 <form method="get" asp-action="Create" asp-controller="Achievement">
-    <input type="submit" value="Create achievement" />
+    <input class="creates__button" type="submit" value="Create an achievement" />
 </form>

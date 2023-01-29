@@ -20,13 +20,16 @@ namespace AdminPanel.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Index() => View(await _context.News.Include(x => x.MediaFiles).ToListAsync());
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Details(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
         [Authorize]
-        public async Task<IActionResult> Update(int id) => View(await _context.Achievements.FindAsync(id));
+        [HttpGet]
+        public async Task<IActionResult> Update(int id) => View(await _context.News.FindAsync(id));
 
         [HttpPost]
         public async Task<IActionResult> Update(int id, string name, string description)
@@ -42,6 +45,11 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var news = await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id);
+            foreach(var mediaFile in news.MediaFiles)
+            {
+                System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
+            }
+            _context.MediaFiles.RemoveRange(news.MediaFiles);
             _context.News.Remove(news);
             await _context.SaveChangesAsync();
 
@@ -49,6 +57,7 @@ namespace AdminPanel.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult Create() => View();
 
         [HttpPost]
@@ -76,6 +85,7 @@ namespace AdminPanel.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> UpdateMedia(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
         [HttpPost]
@@ -91,6 +101,7 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> DeleteMediaFile(int id, int mediaId)
         {
             var mediaFile = await _context.MediaFiles.FindAsync(mediaId);
+            System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
             _context.MediaFiles.Remove(mediaFile);
             await _context.SaveChangesAsync();
             return RedirectToAction("UpdateMedia", new {id = id});
