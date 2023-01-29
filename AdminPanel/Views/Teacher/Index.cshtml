@@ -1,0 +1,46 @@
+﻿@model List<Teacher>
+@{
+    Layout = "_Layout";
+
+}
+<link href="@Url.Content("~/css/Teacher/Index.css")" rel="stylesheet" />
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Subject</th>
+        <th>Profile picture</th>
+        <th colspan="2" style="text-align:center;">Actions</th>
+    </tr>
+    @foreach (var teacher in Model)
+    {
+        <tr>
+            <td><a asp-action="Details" asp-controller="Teacher" asp-route-id="@teacher.Id">@teacher.Name</a></td>
+            <td>@teacher.Subject</td>
+            <td>
+                @if (teacher.ProfilePicture is not null)
+                {
+                    <img height="80px" src="@teacher.ProfilePicture.Path" alt="@teacher.ProfilePicture.Name">
+                }
+                else 
+                {
+                    <span>No picture</span>
+                }
+            </td>
+            <td>
+                <form method="get" asp-action="Update" asp-controller="Teacher" asp-route-id="@teacher.Id">
+                    <input class="edita__button" type="submit" value="Edit" />
+                </form>
+            </td>
+            <td>
+                <form method="post" asp-action="Delete" asp-controller="Teacher" asp-route-id="@teacher.Id">
+                    <input class="delete__button" type="submit" value="Delete" />
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<form method="get" asp-action="Create" asp-controller="Teacher">
+    <input class="creates__button" type="submit" value="Create a teacher" />
+</form>

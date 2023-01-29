@@ -1,0 +1,19 @@
+﻿@model Teacher
+
+<p>
+    @if (Model.ProfilePicture is not null)
+    {
+        <img height="100px" src="@Model.ProfilePicture.Path" alt="@Model.ProfilePicture.Name">
+    }
+    else
+    {
+        <h2>No picture</h2>
+    }
+</p>
+<h1>@Model.Name</h1>
+
+<p>@Model.Subject</p>
+
+<form asp-action="Index" asp-controller="Teacher" method="get">
+    <input type="submit" value="Back" />
+</form>

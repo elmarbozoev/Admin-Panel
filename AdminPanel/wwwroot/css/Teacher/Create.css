@@ -1,0 +1,44 @@
+﻿.input {
+    margin-bottom: 10px;
+}
+
+.pic {
+    padding-bottom: 5px;
+}
+
+.back__button {
+    width: 64px;
+    height: 26px;
+    font-size: 16px;
+    border: 0.1px solid black;
+    border-radius: 4px;
+    text-align: center;
+    background: none;
+    margin-top: 15px;
+    margin-right: 6px;
+    margin-bottom: 15px;
+}
+.create__button {
+    width: 77px;
+    height: 26px;
+    font-size: 16px;
+    border: 0.1px solid black;
+    border-radius: 4px;
+    text-align: center;
+    background: none;
+    margin-top: 15px;
+    margin-right: 6px;
+    margin-bottom: 15px;
+}
+.chose__button {
+    width: 320px;
+    height: 26px;
+    font-size: 16px;
+    border: 0.1px solid black;
+    border-radius: 4px;
+    text-align: center;
+    background: none;
+    margin-top: 15px;
+    margin-right: 6px;
+    margin-bottom: 15px;
+}

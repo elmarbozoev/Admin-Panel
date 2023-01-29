@@ -22,15 +22,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Media\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Views\News\CreateNews.cshtml" />
     <None Include="Views\News\EditNews.cshtml" />
     <None Include="Views\News\EditPictures.cshtml" />
     <None Include="Views\News\Index.cshtml" />
     <None Include="Views\News\ShowNews.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Media\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Achievement\Details.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

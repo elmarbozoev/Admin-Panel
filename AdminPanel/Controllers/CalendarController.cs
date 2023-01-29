@@ -1,4 +1,5 @@
-﻿using AdminPanel.Models;
+﻿using AdminPanel.Interfaces;
+using AdminPanel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

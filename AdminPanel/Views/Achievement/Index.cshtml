@@ -16,7 +16,7 @@
     @foreach(var achievement in Model)
     {
         <tr>
-            <td>@achievement.Name</td>
+            <td><a asp-action="Details" asp-controller="Achievement" asp-route-id="@achievement.Id">@achievement.Name</a></td>
             <td>@achievement.Description</td>
             <td>
                 @if(achievement.MediaFiles.Count != 0)
@@ -53,5 +53,5 @@
 </table>
 
 <form method="get" asp-action="Create" asp-controller="Achievement">
-    <input class="creates__button" type="submit" value="Create achievement" />
+    <input class="creates__button" type="submit" value="Create an achievement" />
 </form>

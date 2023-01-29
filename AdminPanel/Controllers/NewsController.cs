@@ -45,6 +45,11 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var news = await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id);
+            foreach(var mediaFile in news.MediaFiles)
+            {
+                System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
+            }
+            _context.MediaFiles.RemoveRange(news.MediaFiles);
             _context.News.Remove(news);
             await _context.SaveChangesAsync();
 
@@ -96,6 +101,7 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> DeleteMediaFile(int id, int mediaId)
         {
             var mediaFile = await _context.MediaFiles.FindAsync(mediaId);
+            System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
             _context.MediaFiles.Remove(mediaFile);
             await _context.SaveChangesAsync();
             return RedirectToAction("UpdateMedia", new {id = id});
