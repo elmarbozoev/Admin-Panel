@@ -14,10 +14,24 @@ namespace AdminPanel.Controllers
             _context = context;
         }
 
-        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
+
+        [Authorize]
+        public IActionResult AdminIndex()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Search(string query)
+        {
+            string contrroller = query.Split('/')[0];
+            string action = query.Split('/')[1];
+            return RedirectToAction(action, contrroller);
+        }
+
     }
 }

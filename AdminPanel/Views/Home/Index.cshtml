@@ -1,8 +1,534 @@
-﻿@if(User.Identity.IsAuthenticated){
-    <link href="~/css/Home/Index.css" rel="stylesheet">
-    <p>@User.Identity.Name</p>
-    <form method="post" asp-controller="Account" asp-action="Logout">
-        <input class="home__exit" type="submit" value="Выход">
-    </form>
-
+﻿@{
+    Layout = null;
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.css" integrity="sha512-rF+FkLhdJu8p6NNoi0y30W5xPessa8yC8/3u3p5/biTeDpsxik1XfrgfqZG/mUmJ/2cA73nArDuWnX2JQLvlmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css" integrity="sha512-tYKqO78H3mRRCHa75fms1gBvGlANz0JxjN6fVrMBvWL+vOOy200npwJ69OBl9XEsTu3yVUvZNrdWFIIrIf8FLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css" integrity="sha512-okkLcBJE+U19Dpd0QdHA1wn4YY6rW3CwaxeLJT3Jmj9ZcNSbln/VYw8UdqXRIwLX7J8PmtHs0I/FPAhozFvXKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://use.fontawesome.com/9b8c2c2724.js"></script>
+    <link href="~/css/Home/Index.css" rel="stylesheet" />
+
+    <title>Bilimkana</title>
+</head>
+<body>
+    <header class="head">
+        <div class="container">
+            <div class="head__top">
+                <ul class="social__list">
+                    <li class="social__item">
+                        <a href="">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="social__item">
+                        <a href="">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="head__logo">
+                    <a href=""><img src="./img/logo 1.svg" alt=""></a>
+                </div>
+
+                <div class="head__search">
+                    <form method="post" asp-action="Search" asp-controller="Home">
+                        <input name="query" type="text" value="Поиск">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </form>
+                </div>
+            </div>
+            <nav class="head__nav">
+                <ul class="menu">
+                    <li><a href="#postup">ПОСТУПАЮЩИМ</a></li>
+                    <li><a href="#rukov">РУКОВОДСТВО</a></li>
+                    <li><a href="#teach">УЧИТЕЛЯ</a></li>
+                    <li><a href="#partner">ПАРТНЕРЫ</a></li>
+                    <li><a href="#news">НОВОСТИ</a></li>
+                    <li><a href="#proj">ПРОЕКТНАЯ ДЕЯТЕЛЬНОСТЬ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+            <section class="slider">
+                <div class="swiper swiper__hero">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" id="swiper__slide1">
+                            <div class="container">
+                                <h1 class="swiper__tittle">
+                                    Наши приоритеты: <br>
+                                    критическое мышление, <br>
+                                    английский язык,<br>
+                                    программирование, Art.
+                                </h1>
+                                <div class="swiper__sign">
+                                    <button class="sign__button">ЗАПИСАТЬСЯ</button>
+                                    <img src="~/img/Component 39.svg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide" id="swiper__slide2">
+                            <div class="container">
+                                <div class="swiper__text">
+                                    <p class="swiper__mission">
+                                        Миссия Фонда BILIMKANA - <br>
+                                        поддержка и формирование <br>
+                                        нового поколения молодых людей, <br>
+                                        конкурентоспособных<br>
+                                        на глобальном уровне <br>
+                                    </p>
+                                    <div class="swiper__line"></div>
+                                    <p class="swiper__school">
+                                        В нашей школе дети: <br>
+                                        Свободные, говорящие на нескольких языках,<br>
+                                        имеющие свою точку зрения и уважающие<br>
+                                        чужое мнение, с критическим мышлением,<br>
+                                        коммуникабельные и мобильные, любящие свою Родину, <br>
+                                        имеющие свою страновую идентичность, <br>
+                                        близкие к культуре и искусстве. <br>
+                                    </p>
+                                    <div class="button__more"><button class="more__button">ПОДРОБНЕЕ</button></div>
+                                </div>
+                                <div class="swiper__img"><img src="~/img/Group 481525.png" alt=""></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </section>
+        </section>
+        <section class="news">
+            <div class="container">
+                <a name="news">
+                    <p class="news__tittle">Новости</p>
+                </a>
+                <section class="slider slider__news">
+                    <div class="swiper swiper__news">
+                        <div class="swiper-wrapper news__wrapper">
+                            <div class="swiper-slide">
+                                <div class="news__card">
+                                    <img src="~/img/teacher  3.svg" alt="">
+                                    <p class="news__teachertxt">
+                                        Новый учитель <br>
+                                        английского языка
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="news__card">
+                                    <img src="~/img/16b8b086ed68f7971097ae73858b7f98 3.svg" alt="">
+                                    <p class="news__teachertxt">
+                                        Новый учитель <br>
+                                        английского языка
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="news__card">
+                                    <img src="~/img/teacher  3.svg" alt="">
+                                    <p class="news__teachertxt">
+                                        Новый учитель <br>
+                                        английского языка
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="news__card">
+                                    <img src="~/img/16b8b086ed68f7971097ae73858b7f98 3.svg" alt="">
+                                    <p class="news__teachertxt">
+                                        Новый учитель <br>
+                                        английского языка
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="news__card">
+                                    <img src="~/img/teacher  3.svg" alt="">
+                                    <p class="news__teachertxt">
+                                        Новый учитель <br>
+                                        английского языка
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="news__card">
+                                    <img src="~/img/16b8b086ed68f7971097ae73858b7f98 3.svg" alt="">
+                                    <p class="news__teachertxt">
+                                        Новый учитель <br>
+                                        английского языка
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper__navigation">
+                        <div class="swiper-button-prev"><img src="~/img/Vector.svg" alt=""></div>
+                        <div class="swiper-button-next"><img src="~/img/Vector.svg" alt=""></div>
+                    </div>
+                </section>
+            </div>
+        </section>
+        <section class="why">
+            <div class="container">
+                <p class="why__tittle">Почему мы?</p>
+                <div class="why__wrap">
+                    <div class="why__wrap__sec">
+                        <p>
+                            Углублённое<br>
+                            изучение
+                        </p>
+                        <img src="~/img/SEM05478 1.svg" alt="">
+                    </div>
+
+                    <div class="why__wrap__sec">
+                        <p>
+                            Качество, <br>
+                            проверенное <br>
+                            временем!
+                        </p>
+                        <img src="~/img/b5a055c767072b24f9027058bcc91881 1.svg" alt="">
+                    </div>
+
+                    <div class="why__wrap__sec">
+                        <p>
+                            Уровневое <br>
+                            обучение
+                        </p>
+                        <img src="~/img/5e7Sg6sNWjMe9u 1.svg" alt="">
+                    </div>
+
+                    <div class="why__wrap__sec">
+                        <p>
+                            Уроки по <br>
+                            интересам
+                        </p>
+                        <img src="~/img/46b8cc6877913b7c3ddb5d5f88f5dab7 1.svg" alt="">
+                    </div>
+
+                    <div class="why__wrap__sec">
+                        <p>
+                            Домашних <br>
+                            заданий нет
+                        </p>
+                        <img src="~/img/SEM00264 2.png" alt="">
+                    </div>
+
+                    <div class="why__wrap__sec">
+                        <p> Коммуникация   </p>
+                        <img src="~/img/SEM04631 1 (1).png" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="applic">
+
+            <div class="container">
+                <a name="postup">
+                    <p class="applic__tittle">Поступающим</p>
+                </a>
+                <div class="applic__way">
+                    <div class="way__form">
+                        <p class="form__tittle">Сдать тест</p>
+                        <img id="form__img1" src="~/img/Vector.svg" alt="">
+                    </div>
+                    <div class="way__form">
+                        <p class="form__tittle">Документы</p>
+                        <img id="form__img2" src="~/img/Vector.svg" alt="">
+                    </div>
+                    <div class="way__form">
+                        <p class="form__tittle">Интервью</p>
+                        <img id="form__img3" src="~/img/Vector (1).svg" alt="">
+                    </div>
+                </div>
+                <div class="applic__apply">
+                    <p class="apply__tittle">КАК ПОСТУПИТЬ В BILIMKANA SCHOOL?</p>
+                    <div class="apply__first">
+                        <p class="first__tittle">1 шаг: Вступительное тестирование</p>
+                        <p class="first__condition">
+                            При поступлении в школу с 0 по 1 классы кандидаты проходят интервью с психологом, со 2 по 11 классы, кандидаты сдают тест и проходят интервью с <br>
+                            психологом.
+                        </p>
+                        <p class="first__scolar">По результатам теста предоставляются стипендии.</p>
+                        <ul class="scolars">
+                            <li class="scolars__type"><b>Золотая стипендия</b>($1500) предоставляется кандидатам, выполнившим успешно от 91% вступительного теста.</li>
+                            <li class="scolars__type"><b>Серебряная стипендия</b>($1000) предоставляется при 81 % успешном прохождении теста.</li>
+                            <li class="scolars__type"><b>Бронзовая стипендия</b>($500) предоставляется кандидатам, выполнившимуспешно более 70% тестирования. </li>
+                        </ul>
+                        <p class="first__year">Стипендии действуют в течение одного академического года.</p>
+                        <p class="first__subtittle">
+                            Чтобы начать процесс поступления необходимо пройти по ссылке ниже и заполнить форму заявки. После этого мы свяжемся с вами и <br>
+                            проконсультируем о дальнейших шагах.
+                        </p>
+                        <div class="swiper__sign">
+                            <button class="sign__button">ЗАПИСАТЬСЯ</button>
+                        </div>
+                    </div>
+                    <div class="apply__sec">
+                        <p class="sec__tittle">2 шаг: Заявление на зачисление учащегося</p>
+                        <p class="sec__docs">Учащиеся, вступительное тестирование, должны предоставить перечень документов на создание контракта:</p>
+                        <ul class="scolars">
+                            <li class="scolars__type">Свидетельство о рождении и паспорта родителей (можно одного)</li>
+                            <li class="scolars__type">Личное дело из школы</li>
+                            <li class="scolars__type"> Мед карты 026 и 063</li>
+                        </ul>
+                    </div>
+                    <div class="apply__cost">
+                        <p class="cost__tittle">СТОИМОСТЬ ОБУЧЕНИЯ</p>
+                        <p class="cost__cost">
+                            Стоимость обучения 5000$ в год. <br>
+                            Питание и транспорт оплачиваются отдельно.
+                        </p>
+                        <p class="cost__burg">
+                            Стоимость контракта и форма оплаты для каждого отдельного учащегося фиксируется в приложении к Договору об оказании образовательных услуг, <br>
+                            заключенном между школой и родителем. Для получения подробной информации о сроках и формах оплаты, а также о возможных скидках <br>
+                            обращайтесь по номеру +996 (770) 11 00 25.
+                        </p>
+                        <p class="cost__sale">На второго и более детей - 10% скидка каждому ребёнку, в случае если ребёнок не получает одну из наших стипендий по результатам тестирования.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="teach">
+            <div class="container">
+                <div class="teach__info">
+                    <a href="#teach">
+                        <p class="teach__tittle">
+                            Познакомтесь с нашими <br>
+                            преподователями
+                        </p>
+                    </a>
+                    <div class="teach__button">
+                        <button class="button__teach">ПОДРОБНЕЕ</button>
+                    </div>
+                </div>
+                <div class="teach__row">
+                    <div class="teach__card">
+                        <img class="teach__img" src="~/img/SEM05936 1.svg" alt="">
+                        <p class="teach__subtittle">
+                            Фамилия Имя <br>
+                            Отчество
+                        </p>
+                        <p class="teach__subsubtittle">математика</p>
+                    </div>
+                    <div class="teach__card">
+                        <img class="teach__img" src="~/img/SEM05491 1.jpg" alt="">
+                        <p class="teach__subtittle">
+                            Фамилия Имя <br>
+                            Отчество
+                        </p>
+                        <p class="teach__subsubtittle">математика</p>
+                    </div>
+                    <div class="teach__card">
+                        <img class="teach__img" src="~/img/SEM05331 1.svg" alt="">
+                        <p class="teach__subtittle">
+                            Фамилия Имя <br>
+                            Отчество
+                        </p>
+                        <p class="teach__subsubtittle">математика</p>
+                    </div>
+                    <div class="teach__card">
+                        <img class="teach__img" src="~/img/SEM05509 1.svg" alt="">
+                        <p class="teach__subtittle">
+                            Фамилия Имя <br>
+                            Отчество
+                        </p>
+                        <p class="teach__subsubtittle">математика</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="proj">
+            <div class="container">
+                <a name="proj">
+                    <p class="proj__tittle">Проектная деятельность</p>
+                </a>
+                <section class="slider slider__proj">
+                    <div class="swiper swiper__proj">
+                        <div class="swiper-wrapper proj__wrapper">
+                            <div class="swiper-slide">
+                                <div class="proj__card">
+                                    <img src="~/img/IMG_4347 1.svg" alt="">
+                                    <p class="proj__card__tittle">
+                                        Французский <br>
+                                        Немецкий <br>
+                                        Китайский <br>
+                                        Английский
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="proj__card">
+                                    <img src="~/img/SEM00951 2.png" alt="">
+                                    <p class="proj__card__tittle">Танцы</p>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="proj__card">
+                                    <img src="~/img/SEM03355 2.png" alt="">
+                                    <p class="proj__card__tittle">Программирование </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper__navigation2">
+                        <div class="swiper-button-prev"><img src="~/img/Vector.svg" alt=""></div>
+                        <div class="swiper-button-next"><img src="~/img/Vector.svg" alt=""></div>
+                    </div>
+                </section>
+            </div>
+        </section>
+        <section class="teach">
+            <div class="container">
+                <div class="teach__info">
+                    <a name="rukov">
+                        <p class="teach__tittle">Руководство нашей школы</p>
+                    </a>
+                </div>
+                <div class="teach__row">
+                    <div class="teach__card">
+                        <img class="teach__img" src="~/img/SEM05936 1.svg" alt="">
+                        <p class="teach__subtittle">
+                            Фамилия Имя <br>
+                            Отчество
+                        </p>
+                        <p class="teach__subsubtittle">математика</p>
+                    </div>
+                    <div class="teach__card">
+                        <img class="teach__img" src="~/img/SEM05491 1.jpg" alt="">
+                        <p class="teach__subtittle">
+                            Фамилия Имя <br>
+                            Отчество
+                        </p>
+                        <p class="teach__subsubtittle">математика</p>
+                    </div>
+                    <div class="teach__card">
+                        <img class="teach__img" src="~/img/SEM05331 1.svg" alt="">
+                        <p class="teach__subtittle">
+                            Фамилия Имя <br>
+                            Отчество
+                        </p>
+                        <p class="teach__subsubtittle">математика</p>
+                    </div>
+                    <div class="teach__card">
+                        <img class="teach__img" src="~/img/SEM05509 1.svg" alt="">
+                        <p class="teach__subtittle">
+                            Фамилия Имя <br>
+                            Отчество
+                        </p>
+                        <p class="teach__subsubtittle">математика</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="achieve">
+            <div class="container">
+                <p class="achieve__tittle">Достижения нашей школы </p>
+                <div class="achieve__row">
+                    <div class="achieve__card">
+                        <p class="achieve__card__tittle">
+                            Семь учениц школы <br>
+                            Билимкана American <br>
+                            School подтвердили <br>
+                            свои знания на <br>
+                            тестировании <br>
+                            «Алтын тамга» и <br>
+                            получат аттестаты <br>
+                            особого образца
+                        </p>
+                        <img src="~/img/4140b888188697 1.png" alt="">
+                    </div>
+                    <div class="achieve__card">
+                        <p class="achieve__card__tittle">
+                            В 2021 году школу <br>
+                            закончили 83 <br>
+                            учащихся.
+                        </p>
+                        <img src="~/img/YCAGNq2uVRM 1.png" alt="">
+                    </div>
+                    <div class="achieve__card">
+                        <p class="achieve__card__tittle">
+                            40 выпускников, <br>
+                            что составляет <br>
+                            48%, на «хорошо» <br>
+                            и «отлично».
+                        </p>
+                        <img src="~/img/cdt3 1.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="partners">
+            <div class="container">
+                <a name="partner">
+                    <p class="partners__tittle">Наши партнеры</p>
+                </a>
+                <div class="partners__row">
+                    <div class="partners__card" id="partners__line">
+                        <img src="~/img/7711b98517 1.png" alt="">
+                        <p>
+                            Высшая школа экономики <br>
+                            ( Москва, Россия)
+                        </p>
+                    </div>
+                    <div class="partners__card" id="partners__line1">
+                        <img src="~/img/CaLogo 1.png" alt="">
+                        <p>
+                            Кавказский университет <br>
+                            (Тбилиси, Грузия)
+                        </p>
+                    </div>
+                    <div class="partners__card">
+                        <img src="~/img/Fairfax-University-of-America 1.png" alt="">
+                        <p>Fairfax University of American</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="foot">
+            <div class="container">
+                <div class="foot__row1">
+                    <img src="~/img/logo 2.svg" alt="">
+                    <div class="foot__social">
+                        <img src="~/img/icons8-instagram-24.png" alt="">
+                        <img src="~/img/icons8-facebook-новый-30.png" alt="">
+                    </div>
+                </div>
+                <div class="foot__row2">
+                    <div class="foot__number">
+                        <img src="~/img/icons8-телефон-30.png" alt="">
+                        <p>996 555 730910</p>
+                    </div>
+                    <div class="foot__number">
+                        <img src="~/img/icons8-сообщение-с-заливкой-30.png" alt="">
+                        <p>Example@gmail.com</p>
+                    </div>
+                    <div class="foot__number">
+                        <img src="~/img/icons8-pin-24.png" alt="">
+                        <p>Кайыкова, 51-53</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js" integrity="sha512-2sI5N95oT62ughlApCe/8zL9bQAXKsPPtZZI2KE3dznuZ8HpE2gTMHYzyVN7OoSPJCM1k9ZkhcCo3FvOirIr2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js" integrity="sha512-wdUM0BxMyMC/Yem1RWDiIiXA6ssXMoxypihVEwxDc+ftznGeRu4s9Fmxl8PthpxOh5CQ0eqjqw1Q8ScgNA1moQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/js/Home/Index/js.js"></script>
+</body>
+</html>
