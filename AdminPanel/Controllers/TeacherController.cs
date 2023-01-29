@@ -19,9 +19,11 @@ namespace AdminPanel.Controllers
             _environment = environment;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index() => View(await _context.Teachers.Include(x => x.ProfilePicture).ToListAsync());
 
+        [Authorize]
         [HttpGet]
         public IActionResult Create() => View();
 
@@ -60,9 +62,11 @@ namespace AdminPanel.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Details(int id) => View(await _context.Teachers.Include(x => x.ProfilePicture).FirstOrDefaultAsync(x => x.Id == id));
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Update(int id) => View(await _context.Teachers.Include(x => x.ProfilePicture).FirstOrDefaultAsync(x => x.Id == id));
 
@@ -91,6 +95,7 @@ namespace AdminPanel.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public Task<IActionResult> UpdateMedia(int id)
         {
             throw new NotImplementedException();
