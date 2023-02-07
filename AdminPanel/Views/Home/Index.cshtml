@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ModelsCollection;
+
+@{
     Layout = null;
 }
 
@@ -120,7 +122,24 @@
                 <section class="slider slider__news">
                     <div class="swiper swiper__news">
                         <div class="swiper-wrapper news__wrapper">
-                            <div class="swiper-slide">
+                            @if (Model.News is not null)
+                            {
+                                @foreach (var news in Model.News)
+                                {
+                                    @if (news.MediaFiles.Count != 0)
+                                    {
+                                        <div class="swiper-slide">
+                                            <div class="news__card">
+                                                <img src="@news.MediaFiles.First().Path" alt="">
+                                                <p class="news__teachertxt">
+                                                    @news.Name
+                                                </p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                            @*<div class="swiper-slide">
                                 <div class="news__card">
                                     <img src="~/img/teacher  3.svg" alt="">
                                     <p class="news__teachertxt">
@@ -173,7 +192,7 @@
                                         английского языка
                                     </p>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                     <div class="swiper__navigation">

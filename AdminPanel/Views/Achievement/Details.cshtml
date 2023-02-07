@@ -9,12 +9,12 @@
         {
             <video height="100px" controls>
                 <source src="@mediaFile.Path" type="video/mp4">
-                @mediaFile.Name
+                @mediaFile.Path
             </video>
         }
         else
         {
-            <img height="100px" src="@mediaFile.Path" alt="@mediaFile.Name">
+            <img height="100px" src="@mediaFile.Path" alt="@mediaFile.Path">
         }
     }
 </p>

@@ -1,4 +1,5 @@
 ﻿using AdminPanel.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AdminPanel.Models
 {
@@ -7,7 +8,7 @@ namespace AdminPanel.Models
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public ICollection<MediaFile>? MediaFiles { get; set; }
+        public List<MediaFile>? MediaFiles { get; set; }
         public string? DateOfPublication { get; set; }
 
         public Achievement()

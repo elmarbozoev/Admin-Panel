@@ -21,16 +21,16 @@
             <td>
                 @if(achievement.MediaFiles.Count != 0)
                 {
-                    @if (achievement.MediaFiles.First().Name.EndsWith(".mp4"))
+                    @if (achievement.MediaFiles.First().Path.EndsWith(".mp4"))
                     {
                         <video height="80px" controls>
                             <source src="@achievement.MediaFiles.First().Path" type="video/mp4">
-                            @achievement.MediaFiles.First().Name
+                            @achievement.MediaFiles.First().Path
                         </video>
                     }
                     else
                     {
-                        <img height="80px" src="@achievement.MediaFiles.First().Path" alt="@achievement.MediaFiles.First().Name">
+                        <img height="80px" src="@achievement.MediaFiles.First().Path" alt="@achievement.MediaFiles.First().Path">
                     }
                 }
                 <form method="get" asp-action="UpdateMedia" asp-controller="Achievement" asp-route-id="@achievement.Id">

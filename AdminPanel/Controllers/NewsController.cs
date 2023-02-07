@@ -44,7 +44,7 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var news = await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id);
+            var news = await _context.News.FindAsync(id);
             foreach(var mediaFile in news.MediaFiles)
             {
                 System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
@@ -75,8 +75,9 @@ namespace AdminPanel.Controllers
                     {
                         await uploadedFile.CopyToAsync(fileStream);
                     }
-                    var mediaFile = new MediaFile() { Name = uploadedFile.FileName, Path = path };
+                    var mediaFile = new MediaFile() { Path = path };
                     await _context.MediaFiles.AddAsync(mediaFile);
+                    await _context.SaveChangesAsync();
                     news.MediaFiles.Add(mediaFile);
                     await _context.SaveChangesAsync();
                 }
@@ -89,18 +90,20 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> UpdateMedia(int id) => View(await _context.News.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
         [HttpPost]
-        public async Task<IActionResult> MakeMainMediaFile(int id, int mediaFileIndex)
+        public async Task<IActionResult> MakeMainMediaFile(int id, int mediaFileId)
         {
+            var mediaFile = await _context.MediaFiles.FindAsync(mediaFileId);
             var news = await _context.News.FindAsync(id);
-            news.MainMediaFileIndex = mediaFileIndex;
+            news.MediaFiles.Remove(mediaFile);
+            news.MediaFiles.Insert(0, mediaFile);
             await _context.SaveChangesAsync();
             return RedirectToAction("UpdateMedia", new {id = id});
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteMediaFile(int id, int mediaId)
+        public async Task<IActionResult> DeleteMediaFile(int id, string mediaFileId)
         {
-            var mediaFile = await _context.MediaFiles.FindAsync(mediaId);
+            var mediaFile = await _context.MediaFiles.FindAsync(mediaFileId);
             System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
             _context.MediaFiles.Remove(mediaFile);
             await _context.SaveChangesAsync();
@@ -120,8 +123,9 @@ namespace AdminPanel.Controllers
                     {
                         await uploadedFile.CopyToAsync(fileStream);
                     }
-                    var mediaFile = new MediaFile() { Name = uploadedFile.FileName, Path = path };
+                    var mediaFile = new MediaFile() { Path = path };
                     await _context.MediaFiles.AddAsync(mediaFile);
+                    await _context.SaveChangesAsync();
                     news.MediaFiles.Add(mediaFile);
                     await _context.SaveChangesAsync();
                 }

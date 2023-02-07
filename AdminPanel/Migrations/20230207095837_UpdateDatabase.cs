@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AdminPanel.Migrations
 {
-    public partial class AddCalTbl : Migration
+    public partial class UpdateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,20 +88,19 @@ namespace AdminPanel.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "CalendarItems",
+                name: "Calendars",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Day = table.Column<int>(type: "int", nullable: false),
-                    DayOfWeek = table.Column<string>(type: "longtext", nullable: true)
+                    Month = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Month = table.Column<int>(type: "int", nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false)
+                    Year = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CalendarItems", x => x.Id);
+                    table.PrimaryKey("PK_Calendars", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -115,7 +114,6 @@ namespace AdminPanel.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    MainMediaFileIndex = table.Column<int>(type: "int", nullable: false),
                     DateOfPublication = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -260,20 +258,18 @@ namespace AdminPanel.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<string>(type: "longtext", nullable: true)
+                    Day = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CalendarItemId = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: true)
+                    CalendarId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Events_CalendarItems_CalendarItemId",
-                        column: x => x.CalendarItemId,
-                        principalTable: "CalendarItems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Events_Calendars_CalendarId",
+                        column: x => x.CalendarId,
+                        principalTable: "Calendars",
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -283,8 +279,6 @@ namespace AdminPanel.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Path = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     AchievementId = table.Column<int>(type: "int", nullable: true),
@@ -302,6 +296,29 @@ namespace AdminPanel.Migrations
                         name: "FK_MediaFiles_News_NewsId",
                         column: x => x.NewsId,
                         principalTable: "News",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Teachers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Subject = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ProfilePictureId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teachers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Teachers_MediaFiles_ProfilePictureId",
+                        column: x => x.ProfilePictureId,
+                        principalTable: "MediaFiles",
                         principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -344,9 +361,9 @@ namespace AdminPanel.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Events_CalendarItemId",
+                name: "IX_Events_CalendarId",
                 table: "Events",
-                column: "CalendarItemId");
+                column: "CalendarId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MediaFiles_AchievementId",
@@ -357,6 +374,11 @@ namespace AdminPanel.Migrations
                 name: "IX_MediaFiles_NewsId",
                 table: "MediaFiles",
                 column: "NewsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teachers_ProfilePictureId",
+                table: "Teachers",
+                column: "ProfilePictureId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -380,7 +402,7 @@ namespace AdminPanel.Migrations
                 name: "Events");
 
             migrationBuilder.DropTable(
-                name: "MediaFiles");
+                name: "Teachers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -389,7 +411,10 @@ namespace AdminPanel.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "CalendarItems");
+                name: "Calendars");
+
+            migrationBuilder.DropTable(
+                name: "MediaFiles");
 
             migrationBuilder.DropTable(
                 name: "Achievements");

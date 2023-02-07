@@ -41,10 +41,10 @@ namespace AdminPanel.Controllers
                 {
                     await profilePicture.CopyToAsync(fileStream);
                 }
-                var pfp = new MediaFile() { Name = profilePicture.FileName, Path = path };
-                await _context.MediaFiles.AddAsync(pfp);
+                var mediaFile = new MediaFile() { Path = path };
+                await _context.MediaFiles.AddAsync(mediaFile);
                 await _context.SaveChangesAsync();
-                teacher.ProfilePicture = await _context.MediaFiles.FindAsync(pfp.Id);
+                teacher.ProfilePicture = mediaFile;
                 await _context.SaveChangesAsync();
             }
 
@@ -54,9 +54,8 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var teacher = await _context.Teachers.Include(x => x.ProfilePicture).FirstOrDefaultAsync(x => x.Id == id);
+            var teacher = await _context.Teachers.FindAsync(id);
             System.IO.File.Delete(_environment.WebRootPath + teacher.ProfilePicture.Path);
-            _context.MediaFiles.Remove(teacher.ProfilePicture);
             _context.Teachers.Remove(teacher);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -80,14 +79,16 @@ namespace AdminPanel.Controllers
 
             if (profilePicture is not null)
             {
-                System.IO.File.Delete(_environment.WebRootPath + teacher.ProfilePicture.Path);
+                System.IO.File.Delete(_environment.WebRootPath + teacher.ProfilePicture);
                 var path = "/Media/" + profilePicture.FileName;
                 using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
                 {
                     await profilePicture.CopyToAsync(fileStream);
                 }
-                teacher.ProfilePicture.Name = profilePicture.FileName;
-                teacher.ProfilePicture.Path = path;
+                var mediaFile = new MediaFile() { Path = path };
+                await _context.MediaFiles.AddAsync(mediaFile);
+                await _context.SaveChangesAsync();
+                teacher.ProfilePicture = mediaFile;
                 await _context.SaveChangesAsync();
             }
 

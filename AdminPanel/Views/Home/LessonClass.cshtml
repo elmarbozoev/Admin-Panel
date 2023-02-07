@@ -1,0 +1,36 @@
+﻿@using AdminPanel.Models;
+@model ModelsCollection;
+
+@if (Model.News is not null)
+{
+    <table class="table">
+        <tr>
+            <th>News Title</th>
+            <th>News Description</th>
+        </tr>
+        @foreach (var news in Model.News)
+        {
+            <tr>
+                <td>@news.Name</td>
+                <td>@news.Description</td>
+            </tr>
+        }
+    </table>
+}
+
+@if (Model.Teachers is not null)
+{
+    <table class="table">
+        <tr>
+            <th>Teacher Name</th>
+            <th>Teacher Subject</th>
+        </tr>
+        @foreach (var teachers in Model.Teachers)
+        {
+            <tr>
+                <td>@teachers.Name</td>
+                <td>@teachers.Subject</td>
+            </tr>
+        }
+    </table>
+}

@@ -1,0 +1,36 @@
+﻿@using AdminPanel.Models;
+@model Tuple<List<News>, List<Teacher>>;
+
+@if (Model.Item1 is not null)
+{
+    <table class="table">
+        <tr>
+            <th>News Title</th>
+            <th>News Description</th>
+        </tr>
+        @foreach (var news in Model.Item1)
+        {
+            <tr>
+                <td>@news.Name</td>
+                <td>@news.Description</td>
+            </tr>
+        }
+    </table>
+}
+
+@if (Model.Item2 is not null)
+{
+    <table class="table">
+        <tr>
+            <th>Teacher Name</th>
+            <th>Teacher Subject</th>
+        </tr>
+        @foreach (var teachers in Model.Item2)
+        {
+            <tr>
+                <td>@teachers.Name</td>
+                <td>@teachers.Subject</td>
+            </tr>
+        }
+    </table>
+}
