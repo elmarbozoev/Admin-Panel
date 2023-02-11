@@ -2,6 +2,7 @@
 using AdminPanel.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdminPanel.Controllers
 {
@@ -146,6 +147,79 @@ namespace AdminPanel.Controllers
             {
                 return View();
             }
+        }
+
+        public async Task<IActionResult> Index() => View(await _userManager.Users.ToListAsync());
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user is not null)
+            {
+                var model = new ChangePasswordViewModel() { Id = user.Id, Email = user.Email };
+                return View(model);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "User is not found");
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(model.Id);
+                if (user is not null)
+                {
+                    IdentityResult result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "User is not found");
+                }
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user is not null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "User is not found");
+            }
+            return RedirectToAction("Index");
         }
     }
 }
