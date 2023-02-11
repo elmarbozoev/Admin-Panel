@@ -1,0 +1,8 @@
+﻿@if(User.Identity.IsAuthenticated){
+    <link href="~/css/Home/AdminIndex.css" rel="stylesheet">
+    <p>@User.Identity.Name</p>
+    <form method="post" asp-controller="Account" asp-action="Logout">
+        <input class="home__exit" type="submit" value="Выход">
+    </form>
+
+}

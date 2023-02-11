@@ -31,7 +31,7 @@
     @for(int i = 0; i < mediaFiles?.Count; i++)
     {
         <div class="media-file">
-            @if (Model.MainMediaFileIndex == i)
+            @if (i == 0)
             {
                 <span class="pic">The main media of the news</span>
             }
@@ -39,17 +39,17 @@
             {
                 <video height="100px" controls>
                     <source src="@mediaFiles[i].Path" type="video/mp4">
-                    @mediaFiles[i].Name
+                    @mediaFiles[i].Path
                 </video>
             }
             else
             {
-                <img height="100px" src="@mediaFiles[i].Path" alt="@mediaFiles[i].Name" />
+                <img height="100px" src="@mediaFiles[i].Path" alt="@mediaFiles[i].Path" />
             }
-            <form method="post" asp-action="MakeMainMediaFile" asp-controller="News" asp-route-id="@Model.Id" asp-route-mediaFileIndex="@i">
+            <form method="post" asp-action="MakeMainMediaFile" asp-controller="News" asp-route-id="@Model.Id" asp-route-mediaFileId="@mediaFiles[i].Id">
                 <input  type="submit" value="Make the main" />
             </form>
-            <form method="post" asp-action="DeleteMediaFile" asp-controller="News" asp-route-id="@Model.Id" asp-route-mediaId="@mediaFiles[i].Id">
+            <form method="post" asp-action="DeleteMediaFile" asp-controller="News" asp-route-id="@Model.Id" asp-route-mediaFileId="@mediaFiles[i].Id">
                 <input class="input"type="submit" value="Delete" />
             </form>
         </div>

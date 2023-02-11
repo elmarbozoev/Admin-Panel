@@ -89,9 +89,6 @@ namespace AdminPanel.Migrations
                     b.Property<int?>("AchievementId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
                     b.Property<int?>("NewsId")
                         .HasColumnType("int");
 
@@ -119,15 +116,31 @@ namespace AdminPanel.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("MainMediaFileIndex")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.ToTable("News");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("PreviewId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PreviewId");
+
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.Teacher", b =>
@@ -365,6 +378,15 @@ namespace AdminPanel.Migrations
                     b.HasOne("AdminPanel.Models.News", null)
                         .WithMany("MediaFiles")
                         .HasForeignKey("NewsId");
+                });
+
+            modelBuilder.Entity("AdminPanel.Models.Project", b =>
+                {
+                    b.HasOne("AdminPanel.Models.MediaFile", "Preview")
+                        .WithMany()
+                        .HasForeignKey("PreviewId");
+
+                    b.Navigation("Preview");
                 });
 
             modelBuilder.Entity("AdminPanel.Models.Teacher", b =>

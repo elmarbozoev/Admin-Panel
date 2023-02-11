@@ -70,8 +70,9 @@ namespace AdminPanel.Controllers
                     {
                         await uploadedFile.CopyToAsync(fileStream);
                     }
-                    var mediaFile = new MediaFile() { Name = uploadedFile.FileName, Path = path };
+                    var mediaFile = new MediaFile() { Path = path };
                     await _context.MediaFiles.AddAsync(mediaFile);
+                    await _context.SaveChangesAsync();
                     achievement.MediaFiles.Add(mediaFile);
                     await _context.SaveChangesAsync();
                 }
@@ -83,9 +84,9 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> UpdateMedia(int id) => View(await _context.Achievements.Include(x => x.MediaFiles).FirstOrDefaultAsync(x => x.Id == id));
 
         [HttpPost]
-        public async Task<IActionResult> DeleteMediaFile(int id, int mediaId)
+        public async Task<IActionResult> DeleteMediaFile(int id, int mediaFileId)
         {
-            var mediaFile = await _context.MediaFiles.FindAsync(mediaId);
+            var mediaFile = await _context.MediaFiles.FindAsync(mediaFileId);
             System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
             _context.MediaFiles.Remove(mediaFile);
             await _context.SaveChangesAsync();
@@ -105,8 +106,9 @@ namespace AdminPanel.Controllers
                     {
                         await uploadedFile.CopyToAsync(fileStream);
                     }
-                    var mediaFile = new MediaFile() { Name = uploadedFile.FileName, Path = path };
+                    var mediaFile = new MediaFile() { Path = path };
                     await _context.MediaFiles.AddAsync(mediaFile);
+                    await _context.SaveChangesAsync();
                     achievement.MediaFiles.Add(mediaFile);
                     await _context.SaveChangesAsync();
                 }

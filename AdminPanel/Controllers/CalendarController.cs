@@ -26,7 +26,7 @@ namespace AdminPanel.Controllers
                 year = DateTime.Now.Year;
             }
             var calendar = await _context.Calendars.Include(x => x.Events).FirstOrDefaultAsync(x => x.Month == (month <= 10 ? '0' + month.ToString() : month.ToString()) && x.Year == year.ToString());
-            if (calendar is null) calendar = new Calendar() { Month = month.ToString(), Year = year.ToString() };
+            if (calendar is null) calendar = new Calendar() { Month = (month < 10 ? '0' + month.ToString() : month.ToString()), Year = year.ToString() };
             return View(calendar);
         }
 
@@ -56,7 +56,7 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int eventId, string name)
         {
-            var @event = await _context.Events.FindAsync(eventId);
+            var @event = await _context.Events.Include(x => x.Calendar).FirstOrDefaultAsync(x => x.Id == eventId);
             @event.Name = name;
             int month = int.Parse(@event.Calendar.Month);
             int year = int.Parse(@event.Calendar.Year);

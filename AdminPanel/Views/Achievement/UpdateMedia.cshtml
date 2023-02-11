@@ -13,18 +13,18 @@
         @foreach(var mediaFile in mediaFiles)
         {
         <div class="media__file">
-            @if(mediaFile.Name.EndsWith("mp4"))
+            @if(mediaFile.Path.EndsWith("mp4"))
             {
                 <video height="100px" controls>
                     <source src="@mediaFile.Path" type="video/mp4">
-                    @mediaFile.Name
+                    @mediaFile.Path
                 </video>
             }
             else
             {
-                <img height="100px" src="@mediaFile.Path" alt="@mediaFile.Name" />
+                <img height="100px" src="@mediaFile.Path" alt="@mediaFile.Path" />
             }
-            <form method="post" asp-action="DeleteMediaFile" asp-controller="Achievement" asp-route-id="@Model.Id" asp-route-mediaId="@mediaFile.Id">
+            <form method="post" asp-action="DeleteMediaFile" asp-controller="Achievement" asp-route-id="@Model.Id" asp-route-mediaFileId="@mediaFile.Id">
                 <input class="input" type="submit" value="Delete" />
             </form>
         </div>

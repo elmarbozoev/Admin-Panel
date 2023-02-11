@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "_Layout";
+}
+<link href="@Url.Content("~/css/Teacher/Create.css")" rel="stylesheet" />
+<h2>Create a project</h2>
+<form method="post" asp-action="Create" asp-controller="Project" enctype="multipart/form-data">
+    <label>Name:</label><br />
+    <input class="input" name="name" type="text" /><br />
+
+    <label class="text__create">Preview:</label><br />
+    <input class="chose__button" type="file" name="preview" value="Choose picture" /><br />
+
+    <input class="create__button" type="submit" value="Create" />
+</form>
+
+<form asp-action="Index" asp-controller="Project">
+    <input class="back__button" type="submit" value="Back" />
+</form>

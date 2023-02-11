@@ -8,7 +8,7 @@ namespace AdminPanel.Interfaces
         int Id { get; set; }
         string? Name { get; set; }
         string? Description { get; set; }    
-        ICollection<MediaFile>? MediaFiles { get; set; }
+        List<MediaFile>? MediaFiles { get; set; }
         string? DateOfPublication { get; set; }
     }
 }
