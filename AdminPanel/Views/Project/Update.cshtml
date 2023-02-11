@@ -1,0 +1,29 @@
+﻿@model Project
+@{
+    Layout = "_Layout";
+
+}
+<link href="@Url.Content("~/wwwroot/css/Achievement/Update.css")" />
+
+<h2>Edit the achievement</h2>
+<form method="post" asp-action="Update" asp-controller="Project" asp-route-id="@Model.Id" enctype="multipart/form-data">
+    <label>Project name: </label><br />
+    <input class="input" name="name" type="text" value="@Model.Name"/><br />
+
+    <label>Preview: </label><br />
+    @if (Model.Preview is not null)
+    {
+        <img height="80px" src="@Model.Preview.Path" alt="@Model.Preview.Path">
+    }
+    else
+    {
+        <span>No picture</span>
+    }<br />
+    <input class="input" type="file" name="preview" value="Choose picture" /><br />
+
+    <input class="input" type="submit" value="Save changes" />
+</form>
+
+<form method="get" asp-action="Index" asp-controller="Project">
+    <input type="submit" value="Back" />
+</form>

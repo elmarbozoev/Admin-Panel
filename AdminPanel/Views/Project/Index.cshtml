@@ -1,0 +1,44 @@
+﻿@model List<Project>
+@{
+    Layout = "_Layout";
+
+}
+<link href="@Url.Content("~/css/Teacher/Index.css")" rel="stylesheet" />
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Preview</th>
+        <th colspan="2" style="text-align:center;">Actions</th>
+    </tr>
+    @foreach (var project in Model)
+    {
+        <tr>
+            <td>@project.Name</td>
+            <td>
+                @if (project.Preview is not null)
+                {
+                    <img height="80px" src="@project.Preview.Path" alt="@project.Preview.Path">
+                }
+                else 
+                {
+                    <span>No preview</span>
+                }
+            </td>
+            <td>
+                <form method="get" asp-action="Update" asp-controller="Project" asp-route-id="@project.Id">
+                    <input class="edita__button" type="submit" value="Edit" />
+                </form>
+            </td>
+            <td>
+                <form method="post" asp-action="Delete" asp-controller="Project" asp-route-id="@project.Id">
+                    <input class="delete__button" type="submit" value="Delete" />
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<form method="get" asp-action="Create" asp-controller="Project">
+    <input class="creates__button" type="submit" value="Create a project" />
+</form>

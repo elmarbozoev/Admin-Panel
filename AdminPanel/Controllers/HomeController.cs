@@ -20,6 +20,7 @@ namespace AdminPanel.Controllers
             collection.Teachers = await _context.Teachers.Include(x => x.ProfilePicture).ToListAsync();
             collection.News = await _context.News.Include(x => x.MediaFiles).ToListAsync();
             collection.Achievements = await _context.Achievements.Include(x => x.MediaFiles).ToListAsync();
+            collection.Projects = await _context.Projects.Include(x => x.Preview).ToListAsync();
 
             return View(collection);
         }

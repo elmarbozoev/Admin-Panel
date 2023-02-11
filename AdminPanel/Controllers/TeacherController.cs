@@ -54,8 +54,9 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var teacher = await _context.Teachers.FindAsync(id);
+            var teacher = await _context.Teachers.Include(x => x.ProfilePicture).FirstOrDefaultAsync(x => x.Id == id);
             System.IO.File.Delete(_environment.WebRootPath + teacher.ProfilePicture.Path);
+            _context.MediaFiles.Remove(teacher.ProfilePicture);
             _context.Teachers.Remove(teacher);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -85,10 +86,7 @@ namespace AdminPanel.Controllers
                 {
                     await profilePicture.CopyToAsync(fileStream);
                 }
-                var mediaFile = new MediaFile() { Path = path };
-                await _context.MediaFiles.AddAsync(mediaFile);
-                await _context.SaveChangesAsync();
-                teacher.ProfilePicture = mediaFile;
+                teacher.ProfilePicture.Path = path;
                 await _context.SaveChangesAsync();
             }
 

@@ -379,7 +379,19 @@
                 <section class="slider slider__proj">
                     <div class="swiper swiper__proj">
                         <div class="swiper-wrapper proj__wrapper">
-                            <div class="swiper-slide">
+                            @if(Model.Projects is not null)
+                            {
+                                @foreach(var project in Model.Projects)
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="proj__card">
+                                            <img src="@project.Preview.Path" alt="">
+                                            <p class="proj__card__tittle">@project.Name</p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            @*<div class="swiper-slide">
                                 <div class="proj__card">
                                     <img src="~/img/IMG_4347 1.svg" alt="">
                                     <p class="proj__card__tittle">
@@ -401,7 +413,7 @@
                                     <img src="~/img/SEM03355 2.png" alt="">
                                     <p class="proj__card__tittle">Программирование </p>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                     <div class="swiper__navigation2">

@@ -6,5 +6,6 @@
         public List<Achievement>? Achievements { get; set; }
         public List<Teacher>? Teachers { get; set; }
         public List<Calendar>? Calendars { get; set; }
+        public List<Project>? Projects { get; set; }
     }
 }

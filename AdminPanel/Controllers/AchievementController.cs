@@ -45,7 +45,6 @@ namespace AdminPanel.Controllers
                 System.IO.File.Delete(_environment.WebRootPath + mediaFile.Path);
             }
             _context.MediaFiles.RemoveRange(achievement.MediaFiles);
-            await _context.SaveChangesAsync();
             _context.Achievements.Remove(achievement);
             await _context.SaveChangesAsync();
 

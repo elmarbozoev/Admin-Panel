@@ -16,6 +16,7 @@ namespace AdminPanel.Models
         public DbSet<Event> Events { get; set; } = null!;
         public DbSet<Teacher> Teachers { get; set; } = null!;
         public DbSet<MediaFile> MediaFiles { get; set; } = null!;
+        public DbSet<Project> Projects { get; set; } = null!;
 
         //созаем конструктор ApplicationContext, чтоб можно было инициализировать объекты класса AppliCationContext в других
         //классах (контроллеры  втом числе)
