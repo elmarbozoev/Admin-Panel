@@ -87,9 +87,14 @@ a{
     font-size: 18px;
     line-height: 21px;
     font-variant: small-caps;
+    transition: 0.3s;
+}
+.menu li a:hover{
+    transition: 0.3s;
+    color: #FE6601;
 }
 
-#swiper__slide1 {
+#swiper__slide1{
     background-image: url(../../img/DJI_0132.svg);
     box-shadow: inset;
     height: 100vh;
@@ -97,13 +102,13 @@ a{
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    
 }
 #swiper__slide1::before{
+    content: '';
     width: 100%;
-    position: absolute;
     height: 100%;
-    top: 0;
-    left: 0;
+    position: absolute;
     background-color: rgba(0, 0, 0, 0.25);
     z-index: 1;
 }
@@ -116,6 +121,7 @@ a{
 .swiper__sign{
     display: flex;
     justify-content: space-between;
+  width: 180%;
 }
 .hero__subtittle{
     color: white;
@@ -190,6 +196,10 @@ a{
     justify-content: space-between;
     background: radial-gradient(100% 421.98% at 0% 7.42%, #8563CD 0%, #821996 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
 }
+.swiper__white{
+    position: absolute;
+    z-index: 2;
+}
 .swiper__tittle{
     font-family: 'Montserrat' ;
     font-weight: 800;
@@ -222,59 +232,7 @@ a{
 .swiper-pagination-bullet.swiper-pagination-bullet-active{
     background-color: orange;
 }
-.why{
-    background: radial-gradient(101.22% 383.27% at -1.22% 2.97%, #8563CD 0%, #843E92 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
-}
-.why__tittle{
-    padding-top: 90px;
-    padding-bottom: 64px;
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 44px;
-    color: #FFFFFF;  
-}
-.why__wrap{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding-bottom: 90px;
-    gap: 60px;
-}
-.why__wrap__sec{
-    height: 400px;
-    background: rgba(0, 0, 0, 0.4);
-    font-weight: 800;
-    font-size: 34px;
-    line-height: 41px;
-    color: #FFFFFF;
-    align-items: center;
-    border: 8px solid #E7DAEF;
-    border-radius: 8px;
-    justify-content: center;
-    display: flex;
-    text-align: center;
-    gap: 30px;
-    position: relative;
-}
-.why__wrap__sec img{
-    border-radius: 8px;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.why__wrap__sec p{
-    position: absolute;
-    z-index: 2;
-}
-.why__wrap__sec::before{
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.25);
-    border-radius: 8px;
-    z-index: 1;
-}
+
 .swiper__hero{
     height: 100vh;
 }
@@ -357,6 +315,113 @@ a{
     border: 2px solid white;
     outline: 4px solid orangered;
 }
+.why{
+    background: radial-gradient(101.22% 383.27% at -1.22% 2.97%, #8563CD 0%, #843E92 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+}
+.why__tittle{
+    padding-top: 90px;
+    padding-bottom: 64px;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    color: #FFFFFF;  
+}
+.why__wrap{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-bottom: 90px;
+    gap: 60px;
+}
+.why__wrap__sec__vis{
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 41px;
+    color: #FFFFFF;
+    position: absolute;
+    display: block;
+    z-index: 3;
+    transition: 1s;
+
+}
+.why__wrap__sec__invis{
+    display: none;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    position: absolute;
+    color: #FFFFFF;
+    top: 200px;
+}
+.why__wrap__sec__invis__one{
+    display: none;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    position: absolute;
+    color: #FFFFFF;   
+    top: 200px;
+}
+.why__wrap__sec__invis__three{
+    display: none;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    position: absolute;
+    color: #FFFFFF;
+    top: 200px; 
+}
+.why__wrap__sec:hover .why__wrap__sec__vis{
+   padding-bottom: 150px;
+}
+.why__wrap__sec:hover .why__wrap__sec__invis{
+    display: block;
+    
+}
+.why__wrap__sec:hover .why__wrap__sec__invis__one{
+    display: block;
+    
+}
+.why__wrap__sec:hover .why__wrap__sec__invis__three{
+    display: block;
+    
+}
+.why__wrap__sec{
+    height: 400px;
+    background: rgba(0, 0, 0, 0.4);
+    transition: 1s;
+    align-items: center;
+    border: 8px solid #E7DAEF;
+    border-radius: 8px;
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    gap: 30px;
+    position: relative;
+}
+.why__wrap__sec img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.why__wrap__sec p{
+    position: absolute;
+    z-index: 2;
+}
+.why__wrap__sec::before{
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    z-index: 1;
+}
+
+
 .news__card::before{
     content: '';
     width: 100%;
@@ -651,12 +716,22 @@ bottom: 100px;
     position: relative;
 }
 .swiper__proj{
-
+padding: 20px 0;
 }
 .proj__card{
     max-width: 400px;
     height: 400px;
     position: relative;
+    transition: ease-out 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.proj__card:hover{
+    transform: scale(1.1);
+}
+.proj__card:hover .proj__card__tittle{
+    transform: scale(1.1);
 }
 .proj__card__tittle{
     font-family: 'Montserrat';
@@ -665,10 +740,8 @@ bottom: 100px;
     line-height: 29px;
     text-align: center;
     color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    transition: 0.4s;
 }
 .proj__card::before{
     content: '';
@@ -711,6 +784,51 @@ bottom: 100px;
     height: 400px;
     position: relative;
     width: 400px;
+    transition: 0.4ms;
+}
+.achieve__card__invistittle{
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #FFFFFF;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform:translate(-50%, -50%);
+    transition: 0.2s;
+}
+.achieve__card__vistittle{
+    z-index: 2;
+    opacity: 1;
+    visibility: visible;
+    position: absolute;
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 37px;
+    color: #FFFFFF;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform:translate(-50%, -50%);
+    transition: 0.4ms;
+}
+.achieve__card:hover .achieve__card__invistittle{
+    opacity: 1;
+    visibility: visible;
+    transition: 0.2s;
+}
+.achieve__card:hover .achieve__card__vistittle{
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4ms;
 }
 .achieve__card__tittle{
     position: absolute;
